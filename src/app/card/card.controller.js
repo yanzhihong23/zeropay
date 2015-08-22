@@ -17,7 +17,7 @@
     };
 
     $scope.showPhoneAuthPopup = function() {
-      var addCardPopup = $ionicPopup.show({
+      var phoneAuthPopup = $ionicPopup.show({
         title: '手机验证',
         templateUrl: 'app/card/phone.popup.html',
         scope: $scope,
