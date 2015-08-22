@@ -16,5 +16,14 @@
     $scope.$watch('my', function(val) {
       $log.debug(val);
     }, true)
+
+    $scope.$watch('file', function(val) {
+      $log.debug(val);
+      console.log(val);
+    });
+
+    $scope.onFileSelect = function($files, type) {
+      console.log($files);
+    }
   }
 })();
