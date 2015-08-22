@@ -1,0 +1,30 @@
+<ion-view>
+	<ion-content>
+		<banner-card></banner-card>
+		<step name="2" desc="绑定还款银行卡"></step>
+
+		<div class="item">
+			实名信息
+			<span class="item-note">丁丁   310113199009221</span>
+		</div>
+
+		<div class="item margin-top item-icon-right">
+			银行卡信息
+			<!-- <span class="item-note">丁丁</span> -->
+			<i class="icon ion-ios-plus-empty assertive" ng-click="showAddCardPopup()"></i>
+		</div>
+
+		<div class="padding assertive">为确保资金安全，必须是本人实名的储蓄卡哦</div>
+
+		<div class="item item-icon-right">
+			手机验证
+			<!-- <span class="item-note">丁丁</span> -->
+			<i class="icon ion-ios-plus-empty assertive" ng-click="showPhoneAuthPopup()"></i>
+		</div>
+
+		<div class="padding"></div>
+		<div class="dbl-margin">
+			<button class="button button-block button-assertive">开通</button>
+		</div>
+	</ion-content>
+</ion-view>
