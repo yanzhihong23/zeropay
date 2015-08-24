@@ -2,6 +2,11 @@
 	<ion-content>
 		<banner-id></banner-id>
 
+		<section ng-show="authFail">
+			<fail-alert msg="sorry，身份信息异常！" class="white-bg"></fail-alert>
+			<div class="padding-top content-algin-item gray">请重新拍照并上传照片</div>
+		</section>
+
 		<div class="item margin-top item-icon-right">
 			身份证正面上传
 			<span class="item-note" ng-show="file.front">上传成功</span>
@@ -14,6 +19,10 @@
 			<span class="item-note" ng-show="file.hold">上传成功</span>
 			<i class="icon ion-ios-plus-empty assertive" ng-hide="file.hold" ng-click="showHoldPopup()"></i>
 			<i class="icon ion-ios-checkmark-empty balanced" ng-show="file.hold"></i>
+		</div>
+
+		<div class="dbl-padding" bottom>
+			<button class="button button-block button-assertive no-margin">提交</button>
 		</div>
 
 	</ion-content>

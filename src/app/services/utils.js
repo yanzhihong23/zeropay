@@ -67,7 +67,7 @@
 				  template: obj.content || '',
 				  templateUrl: obj.contentUrl || '',
 				  okText: obj.okText || '确认',
-				  okType: obj.okType || 'button-energized'
+				  okType: obj.okType || 'button-assertive'
 				});
 				alertPopup.then(function(res) {
 					obj.callback && obj.callback();
@@ -79,7 +79,7 @@
 				  template: obj.content || '',
 				  cssClass: obj.cssClass || 'text-center',
 				  okText: obj.okText || '确认',
-				  okType: obj.okType || 'button-energized',
+				  okType: obj.okType || 'button-assertive',
 				  cancelText: obj.cancelText || '取消'
 				});
 				confirmPopup.then(function(res) {

@@ -64,6 +64,21 @@
         templateUrl: 'app/id/id.html',
         controller: 'IdController'
       })
+      .state('account', {
+        url: '/account',
+        templateUrl: 'app/account/account.html',
+        controller: 'AccountController'
+      })
+      .state('bills', {
+        url: '/bills',
+        templateUrl: 'app/bills/bills.html',
+        controller: 'BillsController'
+      })
+      .state('download', {
+        url: '/download',
+        templateUrl: 'app/download/download.html',
+        controller: 'DownloadController'
+      })
 
     $urlRouterProvider.otherwise('/');
   }

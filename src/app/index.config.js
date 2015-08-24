@@ -6,7 +6,7 @@
     .config(config);
 
   /** @ngInject */
-  function config($logProvider, $httpProvider) {
+  function config($logProvider, $httpProvider, $provide) {
     // Enable log
     $logProvider.debugEnabled(true);
 
@@ -25,6 +25,14 @@
         }
       }
     });
+
+    $provide.decorator('$locale', ['$delegate', function($delegate) {
+      if($delegate.id == 'en-us') {
+        $delegate.NUMBER_FORMATS.PATTERNS[1].negPre = '-\u00A4';
+        $delegate.NUMBER_FORMATS.PATTERNS[1].negSuf = '';
+      }
+      return $delegate;
+    }]);
   }
 
 })();

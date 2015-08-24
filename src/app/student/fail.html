@@ -2,10 +2,7 @@
 	<ion-content>
 		<step name="1" desc="学籍认证" class="white-bg"></step>
 
-		<div class="dbl-margin-vertical assertive text-center alert">
-			<i class="icon ion-information-circled  fs-36"></i>
-			<span class="fs-md bold">抱歉，你的学生身份认证未通过！</span>
-		</div>
+		<fail-alert msg="抱歉，你的学生身份认证未通过！"></fail-alert>
 
 		<div class="desc margin">
 			<div class="wrapper">
@@ -23,7 +20,7 @@
 			<button class="button button-block button-assertive">飞一样的去修改</button>
 		</div>
 
-		<div class="dbl-padding code-tunnel">
+		<div class="dbl-padding code-tunnel" bottom>
 			<div>屡战屡败？试试这条华山道<i class="icon ion-ios-arrow-thin-down assertive fs-lg"></i></div>
 			<button class="button button-block button-assertive" ng-click="codeAuth()">学籍码认证通道</button>
 		</div>

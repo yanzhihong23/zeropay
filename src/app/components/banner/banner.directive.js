@@ -21,7 +21,7 @@
   function bannerCard() {
     var directive = {
       restrict: 'E',
-      template: '<img src="assets/images/banner-02.png" width="100%" alt="">'
+      template: '<img src="assets/images/banner-02.png" class="block" width="100%" alt="">'
     };
 
     return directive;
@@ -31,7 +31,7 @@
   function bannerId() {
     var directive = {
       restrict: 'E',
-      template: '<img src="assets/images/banner-03.png" width="100%" alt="">'
+      template: '<img src="assets/images/banner-03.png" class="block" width="100%" alt="">'
     };
 
     return directive;

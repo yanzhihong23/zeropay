@@ -161,6 +161,10 @@ input[readonly]:not(.cloned-text-input){
   background: whitesmoke;
 }
 
+.content-algin-item{
+  padding-left: $content-padding*1.5+1;
+}
+
 .no-padding{
   padding: 0 !important;
 }
