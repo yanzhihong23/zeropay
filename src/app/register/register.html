@@ -18,7 +18,7 @@
 
 			<div class="dbl-margin">
 				<button class="button button-block button-assertive" ng-disabled="regForm.$invalid">注册</button>
-				<div class="text-center fs-xs">点击注册即同意名校贷<a ui-sref="tos" class="assertive">《名校贷授信服务协议》</a>以及<a ui-sref="tos" class="assertive">《隐私协议》</a></div>
+				<div class="text-center fs-xs">点击注册即同意名校贷<a ng-click="showCreditModal()" class="assertive">《名校贷授信服务协议》</a>以及<a ng-click="showPrivacyModal()" class="assertive">《隐私协议》</a></div>
 			</div>
 		</form>
   </ion-content>

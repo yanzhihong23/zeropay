@@ -6,8 +6,10 @@
     .controller('RegisterController', RegisterController);
 
   /** @ngInject */
-  function RegisterController($scope, $state, $stateParams, $ionicLoading, $log, utils, NonoWebApi, userService) {
-  	var resendCountdown = utils.resendCountdown($scope);
+  function RegisterController($scope, $state, $stateParams, $ionicLoading, $ionicModal, $log, utils, NonoWebApi, userService) {
+  	var resendCountdown = utils.resendCountdown($scope),
+        privacyModal,
+        creditModal;
 
     $scope.user = {
     	phone: $stateParams.phone
@@ -59,7 +61,40 @@
     			utils.alert({content: data.message});
     		}
     	})
-    }
+    };
+
+    $scope.showPrivacyModal = function() {
+      privacyModal.show();
+    };
+
+    $scope.closePrivacyModal = function() {
+      privacyModal.hide();
+    };
+
+    $ionicModal.fromTemplateUrl('app/register/privacy.tos.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      privacyModal = modal;
+    });
+
+    $scope.showCreditModal = function() {
+      creditModal.show();
+    };
+
+    $scope.closeCreditModal = function() {
+      creditModal.hide();
+    };
+
+    $ionicModal.fromTemplateUrl('app/register/credit.tos.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      creditModal = modal;
+    });
+
+
+
 
   }
 })();
