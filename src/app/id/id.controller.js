@@ -6,10 +6,18 @@
     .controller('IdController', IdController);
 
   /** @ngInject */
-  function IdController($scope, $state, $ionicLoading, $ionicPopup, $log, utils, UserApi) {
-  	// $scope.authFail = true;
+  function IdController($scope, $state, $ionicLoading, $ionicPopup, $log, utils, userService, NonoWebApi, MSApi) {
+  	var frontPopup, 
+  			holdPopup, 
+        passwordPopup, 
+  			authSuc = false, 
+  			failCounter = +userService.getIdAuthFailCounter() || 0, 
+  			user = userService.getUser(),
+        sessionId = userService.getSessionId();
 
-  	var frontPopup, holdPopup;
+  	$scope.file = {};
+    $scope.user = {}; // for set pay password
+
   	$scope.showFrontPopup = function() {
   		frontPopup = $ionicPopup.show({
   			title: '身份证正面上传',
@@ -29,26 +37,123 @@
   	};
 
   	$scope.showMultiAuthFailAlert = function() {
-  		utils.alert({
-  			content: '审核未通过已达3次！您的申请将转由人工审核。如审核通过，将于1- 3个工作日内短信通知您',
-  			cssClass: 'popup-large'
+  		$ionicPopup.show({
+  			title: '错误提示',
+  			template: '审核未通过已达3次！您的申请将转由人工审核。如审核通过，将于1-3个工作日内短信通知您',
+  			scope: $scope,
+  			cssClass: 'popup-no-title text-center'
   		});
   	};
 
-  	$scope.file = {};
-
   	$scope.$watch('file.front', function (newVal) {
       if (newVal) {
+      	$log.debug(newVal);
+
       	frontPopup.close();
-        $log.debug(newVal);
+      	var params = {
+      		idNo: user.idNo,
+      		phone: user.phone,
+      		file: newVal.base64,
+      		filename: newVal.filename
+      	};
+
+      	NonoWebApi.uploadCertPhoto(params).success(function(data) {
+      		if(+data.result === 1) {
+      			$log.info('cert photo auth success');
+      			authSuc = true;
+
+            $scope.file.front.uploaded = true;
+      		} else {
+            utils.alert({content: data.message});
+          }
+      	}).error(function(data) {
+          $log.error('upload cert photo fail');
+        });
       }
     });
 
     $scope.$watch('file.hold', function (newVal) {
       if (newVal) {
+      	$log.debug(newVal);
+
       	holdPopup.close();
-        $log.debug(newVal);
+      	var params = {
+      		phone: user.phone,
+      		file: newVal.base64,
+      		filename: newVal.filename
+      	};
+
+      	NonoWebApi.uploadHoldCertPhoto(params).success(function(data) {
+      		if(+data.result === 1) {
+            $scope.file.hold.uploaded = true;
+      		} else {
+            utils.alert({content: data.message});
+          }
+      	}).error(function(data) {
+          $log.error('upload hold photo fail');
+        })
       }
     });
+
+    $scope.submit = function() {
+    	if(authSuc) {
+        setPayPassword();
+    	} else {
+    		$scope.authFail = true;
+    		$scope.file = {};
+    		failCounter += 1;
+        // save counter
+        userService.setIdAuthFailCounter(failCounter);
+    		if(failCounter === 3) {
+    			$scope.showMultiAuthFailAlert();
+    		}
+    	}
+    };
+
+    var setPayPassword = function() {
+      passwordPopup = $ionicPopup.show({
+        title: '设置支付密码',
+        templateUrl: 'app/card/password.popup.html',
+        scope: $scope,
+        cssClass: 'popup-large'
+      });
+    };
+
+    // pay password popup
+    $scope.submitPayPassword = function() {
+      MSApi.setPayPassword({
+        sessionId: sessionId,
+        payPassword: user.payPassword
+      }).success(function(data) {
+        if(data.flag === 1) {
+          passwordPopup.close();
+
+          utils.alert({
+            title: '恭喜您',
+            content: '支付密码设置成功',
+            callback: function() {
+              $state.go('account');
+            }
+          });
+        } else {
+          $log.error('set pay password failed', data.msg);
+        }
+      })
+    };
+
+    // init check
+    if(failCounter === 3) {
+      $scope.showMultiAuthFailAlert();
+      return;
+    }
+
+    // save log
+    NonoWebApi.saveActionLog({
+      phone: user.phone,
+      actionType: 4,
+      actionResult: 2,
+      remark: '进入上传身份证流程'
+    });
+    userService.setProcess('uploadId');
   }
 })();

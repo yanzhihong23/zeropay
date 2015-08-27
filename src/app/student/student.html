@@ -2,7 +2,7 @@
 	<ion-content>
 		<step name="1" desc="学籍认证" class="white-bg"></step>
 
-		<form name="authForm">
+		<form name="authForm" ng-submit="submit()">
 			<div class="margin-top">
 				<div class="item item-input">
 					<span class="input-label">姓名</span>
@@ -10,14 +10,14 @@
 				</div>
 				<div class="item item-input">
 					<span class="input-label">身份证</span>
-					<input type="text" placeholder="请输入身份证" ng-model="user.idNo" required>
+					<input type="text" placeholder="请输入身份证" ng-model="user.idNo" id-number required>
 				</div>
 			</div>
 
 			<div class="margin-top">
-				<div class="item item-input item-arrow-right">
+				<div class="item item-input">
 					<span class="input-label">学校</span>
-					<input type="text" placeholder="请选择学校名称" ng-model="user.scholl" ng-click="selectSchool()" readonly required>
+					<input type="text" placeholder="请选择学校名称" auto-complete options="schoolList" ng-model="user.school" required>
 				</div>
 				<div class="item item-input item-arrow-down">
 					<span class="input-label">学历</span>

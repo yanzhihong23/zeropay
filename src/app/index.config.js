@@ -6,7 +6,7 @@
     .config(config);
 
   /** @ngInject */
-  function config($logProvider, $httpProvider, $provide) {
+  function config($logProvider, $httpProvider, $provide, localStorageServiceProvider) {
     // Enable log
     $logProvider.debugEnabled(true);
 
@@ -33,6 +33,8 @@
       }
       return $delegate;
     }]);
+
+    localStorageServiceProvider.setPrefix('zeropay');
   }
 
 })();

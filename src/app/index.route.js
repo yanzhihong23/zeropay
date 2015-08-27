@@ -9,7 +9,7 @@
   function routeConfig($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('home', {
-        url: '/',
+        url: '/?openId',
         templateUrl: 'app/main/main.html',
         controller: 'MainController',
         controllerAs: 'main'
@@ -20,12 +20,12 @@
         controller: 'PhoneController'
       })
       .state('login', {
-        url: '/login',
+        url: '/login?phone',
         templateUrl: 'app/login/login.html',
         controller: 'LoginController'
       })
       .state('register', {
-        url: '/register',
+        url: '/register?phone',
         templateUrl: 'app/register/register.html',
         controller: 'RegisterController'
       })
@@ -35,14 +35,14 @@
         controller: 'RegisterController'
       })
       .state('password:forgot', {
-        url: '/forgot',
+        url: '/forgot?phone',
         templateUrl: 'app/password/forgot.html',
         controller: 'PasswordController'
       })
       .state('password:reset', {
-        url: '/reset',
+        url: '/reset?phone',
         templateUrl: 'app/password/reset.html',
-        controller: 'PasswordController'
+        controller: 'ResetPasswordController'
       })
       .state('studentAuth', {
         url: '/studentAuth',
@@ -52,12 +52,17 @@
       .state('studentAuth:fail', {
         url: '/studentAuth:fail',
         templateUrl: 'app/student/fail.html',
-        controller: 'StudentAuthController'
+        controller: 'StudentAuthFailController'
       })
       .state('card', {
         url: '/card',
         templateUrl: 'app/card/card.html',
         controller: 'CardController'
+      })
+      .state('banks', {
+        url: '/banks',
+        templateUrl: 'app/card/banks.html',
+        controller: 'BankController'
       })
       .state('id', {
         url: '/id',

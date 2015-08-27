@@ -13,11 +13,11 @@
 		</div>
 
 		<div class="padding-top padding-right text-right fs-xs">
-			<a ui-sref="forgot:password" class="assertive">忘记密码？</a>
+			<a ui-sref="password:forgot({phone: user.phone})" class="assertive">忘记密码？</a>
 		</div>
 
 		<div class="dbl-margin">
-			<button class="button button-block button-assertive" ng-disabled="!user.password">下一步</button>
+			<button class="button button-block button-assertive" ng-disabled="!user.password" ng-click="login()">登录</button>
 		</div>
   </ion-content>
 </ion-view>

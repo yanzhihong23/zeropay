@@ -6,20 +6,24 @@
     .controller('PhoneController', PhoneController);
 
   /** @ngInject */
-  function PhoneController($scope, $state, $ionicLoading, UserApi) {
+  function PhoneController($scope, $state, $ionicLoading, NonoWebApi, utils) {
   	$scope.user = {};
-
-  	// UserApi.cors();
 
   	$scope.checkPhone = function() {
   		$ionicLoading.show();
 
-  		UserApi.isRegister({phone: $scope.user.phone})
+  		NonoWebApi.isRegister({phone: $scope.user.phone})
   			.success(function(data) {
   				if(+data.result === 1) {
-  					$state.go('login');
+  					utils.confirm({
+  						content: '手机号已在0元付服务提供方名校贷注册，亲可以直接登录',
+  						okText: '登录',
+  						onOk: function() {
+  							$state.go('login', {phone: $scope.user.phone});
+  						}
+  					});
   				} else {
-  					$state.go('register');
+  					$state.go('register', {phone: $scope.user.phone});
   				}
   			});
 

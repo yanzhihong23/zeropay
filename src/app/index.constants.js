@@ -1,13 +1,18 @@
-/* global malarkey:false, toastr:false, moment:false */
 (function() {
   'use strict';
 
   angular
     .module('zeropay')
-    .constant('HOST', 'http://192.168.1.150:8089')
+    .constant('HOST', 'http://openapi.test.nonobank.com')
+    .constant('MERCHANT', '10000')
+    .constant('PRODUCTID', '90')
+    .value('OPENID', '9527')
     .factory('APISERVER', function(HOST, $location) {
     	var host = /nonobank.com/.test($location.host()) ? $location.protocol() + '://' + $location.host() : HOST;
-    	return host + '/nono-web/creditAuth';
+    	return {
+    		MSAPI: host + '/msapi',
+    		NONOWEB: host + '/nono-web'
+    	};
     })
     .constant('$ionicLoadingConfig', {
 	    template: '<ion-spinner icon="bubbles" class="spinner-assertive"></ion-spinner>'

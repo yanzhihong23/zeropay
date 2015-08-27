@@ -3,12 +3,41 @@
 
   angular
     .module('zeropay')
-    .controller('CardController', CardController);
+    .controller('CardController', CardController)
+    .controller('BankController', BankController);
 
   /** @ngInject */
-  function CardController($scope, $state, $ionicLoading, $ionicPopup, $log, UserApi) {
+  function CardController($scope, $rootScope, $state, $ionicLoading, $ionicPopup, $log, userService, bankService, MSApi, NonoWebApi, utils) {
+    var user = userService.getUser(),
+        sessionId = userService.getSessionId(),
+        mId = userService.getMId(),
+        resendCountdown = utils.resendCountdown($scope),
+        addCardPopup,
+        phoneAuthPopup,
+        passwordPopup,
+        params = {
+          sessionId: sessionId,
+          realname: user.realname,
+          idNo: user.idNo,
+          mId: mId,
+          idType: 0,
+          count: 0.01,
+          key: null,
+          type: null,
+          payCode: 2,
+          payMode: 1
+        };
+
+    $scope.user = {
+      realname: user.realname,
+      idNo: user.idNo
+    };
+
+    $scope.bank = bankService.selected;
+    $scope.card = {};
+
   	$scope.showAddCardPopup = function() {
-      var addCardPopup = $ionicPopup.show({
+      addCardPopup = $ionicPopup.show({
         title: '银行卡信息',
         templateUrl: 'app/card/card.popup.html',
         scope: $scope,
@@ -17,7 +46,7 @@
     };
 
     $scope.showPhoneAuthPopup = function() {
-      var phoneAuthPopup = $ionicPopup.show({
+      phoneAuthPopup = $ionicPopup.show({
         title: '手机验证',
         templateUrl: 'app/card/phone.popup.html',
         scope: $scope,
@@ -25,8 +54,130 @@
       });
     };
 
+    $scope.showPayPasswordPopup = function() {
+      passwordPopup = $ionicPopup.show({
+        title: '设置支付密码',
+        templateUrl: 'app/card/password.popup.html',
+        scope: $scope,
+        cssClass: 'popup-large'
+      });
+    };
+
     $scope.sendVcode = function() {
-      $log.debug('send vcode func');
+      $ionicLoading.show();
+      MSApi.generateOrderNo({sessionId:sessionId}).success(function(data) {
+        if(data.flag === 1) {
+          params.extRefNo = data.data;
+          params.bankCardNo = $scope.card.cardNo;
+          params.mobile = $scope.card.phone;
+
+          $ionicLoading.show();
+          MSApi.getPayVcode(params).success(function(data) {
+            if(data.flag === 1) {
+              resendCountdown();
+              
+              params.storablePan = data.storablePan;
+              params.token = data.token;
+              params.bankCode = $scope.bank.id;
+            } else {
+              utils.alert({
+                content: data.msg
+              });
+            }
+          })
+        }
+      })
+    };
+
+    $scope.selectBank = function() {
+      addCardPopup.close();
+      $state.go('banks');
+    };
+
+    // card popup
+    $scope.submitBank = function() {
+      addCardPopup.close();
+    };
+
+    // phone popup
+    $scope.submitPhone = function() {
+      phoneAuthPopup.close();
+    };
+
+    // pay password popup
+    $scope.submitPayPassword = function() {
+      $ionicLoading.show();
+      MSApi.setPayPassword({
+        sessionId: sessionId,
+        payPassword: user.payPassword
+      }).success(function(data) {
+        if(data.flag === 1) {
+          passwordPopup.close();
+
+          utils.alert({
+            title: '恭喜您',
+            content: '支付密码设置成功',
+            callback: function() {
+              $state.go('account');
+            }
+          });
+        } else {
+          $log.error('set pay password failed', data.msg);
+        }
+      })
+    };
+
+    // bind card
+    $scope.submit = function() {
+      $ionicLoading.show();
+      params.vcode = $scope.card.vcode;
+      MSApi.bindAndPay(params).success(function(data) {
+        if(data.flag === 1) {
+          utils.confirm({
+            title: '快捷支付开通成功！',
+            content: '请童鞋设置支付密码 ，此密码将在您消费购物、充值提现时使用哦~',
+            okText: '马上设置',
+            cancelText: '下次再设置',
+            onOk: function() {
+              $scope.showPayPasswordPopup();
+            },
+            onCancel: function() {
+              $state.go('account');
+            }
+          });
+        } else {
+          utils.alert({
+            title: 'sorry，还款卡绑定失败！',
+            content: data.msg,
+            okText: '我知道了'
+          });
+        }
+      });
+    };
+
+    $scope.$watch('bank', function(val) {
+      if(val && val.name) {
+        $scope.showAddCardPopup();
+      }
+    }, true);
+
+    // save log
+    NonoWebApi.saveActionLog({
+      phone: user.phone,
+      actionType: 6,
+      actionResult: 2,
+      remark: '进入绑卡流程'
+    });
+    userService.setProcess('bindCard');
+  } // CardController end
+
+
+  function BankController($scope, $rootScope, bankService, utils) {
+    $scope.items = bankService.getBankList();
+
+    $scope.select = function(index) {
+      bankService.select(index);
+      utils.goBack();
     };
   }
 })();

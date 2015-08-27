@@ -1,6 +1,6 @@
-<form name="cardForm" ng-submit="submit()">
-	<div class="item item-input">
-		<input type="text" ng-model="card.bankName" placeholder="请输入开户银行">
+<form name="cardForm" ng-submit="submitBank()">
+	<div class="item item-input item-arrow-right" ng-click="selectBank()">
+		<input type="text" ng-model="bank.name" placeholder="请选择开户银行" readonly required>
 	</div>
 
 	<div class="item item-input margin-vertical">

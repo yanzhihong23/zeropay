@@ -1,7 +1,7 @@
 <ion-view>
   <ion-content>
     <banner></banner>
-		<form name="resetForm">
+		<form name="resetForm" ng-submit="submit()">
 			<div class="item item-input margin-top">
 				<span class="input-label">新密码</span>
 				<input type="password" placeholder="6-16位" ng-model="user.password" ng-pattern="passwordPattern" required>

@@ -1,25 +1,26 @@
 <ion-view id="account">
 	<ion-content>
 		<div class="top">
-			<div class="refund-tip dbl-padding-left">
+			<div class="refund-tip dbl-padding-left" ng-show="account.repayment">
 				<img src="assets/images/horn.png" width="18px" alt="">
-				<small>您有一笔待还款<span class="assertive">32.09</span>元，<span class="assertive">3</span>天后到期</small>
+				<small>您有一笔待还款<span class="assertive">{{account.repayment | currency: ''}}</span>元，<span class="assertive">{{account.overdueDays}}</span>天后到期</small>
 			</div>
 
 			<div class="available dbl-padding">
 				<div>可用额度（元）</div>
-				<div class="amount">{{50.12 | currency: ''}}</div>
+				<div class="amount">{{account.availabelCredit | currency: ''}}</div>
 			</div>
 		</div>
 
 		<div class="row refund no-padding">
 			<div class="col-50 dbl-padding-left">
 				<div>应还金额（元）</div>
-				<div class="bold">{{148.08 | currency: ''}}</div>
+				<div class="bold">{{account.repayment | currency: ''}}</div>
 			</div>
 			<div class="col-50">
 				<div>还款日期</div>
-				<div class="bold">2015.08.19</div>
+				<div class="bold" ng-show="account.lastRepaymentDate">{{account.lastRepaymentDate | moment:'YYYY.MM.DD'}}</div>
+				<div class="bold" ng-hide="account.lastRepaymentDate">--</div>
 			</div>
 		</div>
 

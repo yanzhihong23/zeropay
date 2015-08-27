@@ -4,8 +4,7 @@
   angular
     .module('zeropay')
     .directive('banner', banner)
-    .directive('bannerCard', bannerCard)
-    .directive('bannerId', bannerId);
+    .directive('bannerCredit', bannerCredit);
 
   /** @ngInject */
   function banner() {
@@ -18,20 +17,17 @@
   }
 
   /** @ngInject */
-  function bannerCard() {
+  function bannerCredit(userService) {
     var directive = {
       restrict: 'E',
-      template: '<img src="assets/images/banner-02.png" class="block" width="100%" alt="">'
-    };
+      scope: true,
+      templateUrl: 'app/components/banner/credit.banner.html',
+      link: function(scope, element, attr) {
+        var user = userService.getUser();
+        scope.credit = user.credit || 200;
 
-    return directive;
-  }
-
-  /** @ngInject */
-  function bannerId() {
-    var directive = {
-      restrict: 'E',
-      template: '<img src="assets/images/banner-03.png" class="block" width="100%" alt="">'
+        scope.img = angular.isDefined(attr.id) ? 'assets/images/banner-03.png' : 'assets/images/banner-02.png';
+      }
     };
 
     return directive;

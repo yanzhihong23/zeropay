@@ -63,6 +63,20 @@ input[readonly]:not(.cloned-text-input){
   width: 86%;
 }
 
+.popup-no-title .popup-head{
+  display: none;
+}
+
+.item.activated{
+  border-color: $assertive;
+  &, &>input{
+    background: $assertive;
+  }
+  &, *, &.item-arrow-right:after{
+    color: $white;
+  }
+}
+
 // overwrite ionic end
 
 .init-line-height{
