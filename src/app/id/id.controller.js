@@ -150,7 +150,7 @@
     // save log
     NonoWebApi.saveActionLog({
       phone: user.phone,
-      actionType: 4,
+      actionType: 5,
       actionResult: 2,
       remark: '进入上传身份证流程'
     });

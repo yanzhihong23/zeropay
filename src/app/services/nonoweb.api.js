@@ -213,7 +213,7 @@
         headers: headers,
         data: utils.param({
           request: JSON.stringify({
-            userId: obj.userId,
+            userId: obj.userId || '',
             mobileNum: obj.phone,
             productId: PRODUCTID,
             merchantId: MERCHANT,
