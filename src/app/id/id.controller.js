@@ -99,8 +99,7 @@
     	if(authSuc) {
         // active credit
         activeCredit();
-        // set pay password
-        setPayPassword();
+        payPasswordCheck();
     	} else {
     		$scope.authFail = true;
     		$scope.file = {};
@@ -111,6 +110,30 @@
     			$scope.showMultiAuthFailAlert();
     		}
     	}
+    };
+
+    var payPasswordCheck = function() {
+      if(user.hasPayPassword) {
+        utils.alert({
+          title: '身份资料上传成功！',
+          callback: function() {
+            $state.go('account');
+          }
+        });
+      } else {
+        utils.confirm({
+          title: '身份资料上传成功！',
+          content: '请童鞋设置支付密码 ，此密码将在您消费购物、充值提现时使用哦~',
+          okText: '马上设置',
+          cancelText: '下次再设置',
+          onOk: function() {
+            setPayPassword();
+          },
+          onCancel: function() {
+            $state.go('account');
+          }
+        });
+      }
     };
 
     var setPayPassword = function() {

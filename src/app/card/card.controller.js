@@ -134,19 +134,7 @@
       MSApi.bindAndPay(params).success(function(data) {
         if(data.flag === 1) {
           activeCredit();
-
-          utils.confirm({
-            title: '快捷支付开通成功！',
-            content: '请童鞋设置支付密码 ，此密码将在您消费购物、充值提现时使用哦~',
-            okText: '马上设置',
-            cancelText: '下次再设置',
-            onOk: function() {
-              $scope.showPayPasswordPopup();
-            },
-            onCancel: function() {
-              $state.go('account');
-            }
-          });
+          payPasswordCheck();
         } else {
           utils.alert({
             title: 'sorry，还款卡绑定失败！',
@@ -155,6 +143,30 @@
           });
         }
       });
+    };
+
+    var payPasswordCheck = function() {
+      if(user.hasPayPassword) {
+        utils.alert({
+          title: '快捷支付开通成功！',
+          callback: function() {
+            $state.go('account');
+          }
+        });
+      } else {
+        utils.confirm({
+          title: '快捷支付开通成功！',
+          content: '请童鞋设置支付密码 ，此密码将在您消费购物、充值提现时使用哦~',
+          okText: '马上设置',
+          cancelText: '下次再设置',
+          onOk: function() {
+            $scope.showPayPasswordPopup();
+          },
+          onCancel: function() {
+            $state.go('account');
+          }
+        });
+      }
     };
 
     // active credit payment
