@@ -88,6 +88,22 @@
       });
     };
 
+    this.activePayment = function(obj) {
+      return $http({
+        method: 'POST',
+        url: APISERVER.NONOWEB + '/creditPayment/activePayment',
+        headers: headers,
+        data: utils.param({
+          request: JSON.stringify({
+            openId: OPENID,
+            merchant: MERCHANT,
+            mobile: obj.phone,
+            msgKey: md5.createHash(OPENID + MERCHANT + obj.phone)
+          })
+        })
+      });
+    };
+
     this.getSchoolList = function(obj) {
       return $http({
         method: 'POST',
@@ -220,7 +236,7 @@
             remark: obj.remark
           })
         })
-      })
-    }
+      });
+    };
   }
 })();

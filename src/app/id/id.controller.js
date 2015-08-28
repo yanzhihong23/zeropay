@@ -6,7 +6,7 @@
     .controller('IdController', IdController);
 
   /** @ngInject */
-  function IdController($scope, $state, $ionicLoading, $ionicPopup, $log, utils, userService, NonoWebApi, MSApi) {
+  function IdController($scope, $state, $ionicLoading, $ionicPopup, $log, utils, userService, NonoWebApi, MSApi, md5) {
   	var frontPopup, 
   			holdPopup, 
         passwordPopup, 
@@ -97,6 +97,9 @@
 
     $scope.submit = function() {
     	if(authSuc) {
+        // active credit
+        activeCredit();
+        // set pay password
         setPayPassword();
     	} else {
     		$scope.authFail = true;
@@ -119,11 +122,24 @@
       });
     };
 
+    // active credit payment
+    var activeCredit = function() {
+      NonoWebApi.activePayment({
+        phone: user.phone
+      }).success(function(data) {
+        if(!data.result === 1) {
+          $log.info('active payment success');
+        } else {
+          $log.info('active payment failed');
+        }
+      })
+    };
+
     // pay password popup
     $scope.submitPayPassword = function() {
       MSApi.setPayPassword({
         sessionId: sessionId,
-        payPassword: user.payPassword
+        payPassword: md5.createHash($scope.user.payPassword)
       }).success(function(data) {
         if(data.flag === 1) {
           passwordPopup.close();

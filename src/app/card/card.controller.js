@@ -7,7 +7,7 @@
     .controller('BankController', BankController);
 
   /** @ngInject */
-  function CardController($scope, $rootScope, $state, $ionicLoading, $ionicPopup, $log, userService, bankService, MSApi, NonoWebApi, utils) {
+  function CardController($scope, $rootScope, $state, $ionicLoading, $ionicPopup, $log, userService, bankService, MSApi, NonoWebApi, utils, md5) {
     var user = userService.getUser(),
         sessionId = userService.getSessionId(),
         mId = userService.getMId(),
@@ -75,7 +75,7 @@
           MSApi.getPayVcode(params).success(function(data) {
             if(data.flag === 1) {
               resendCountdown();
-              
+
               params.storablePan = data.storablePan;
               params.token = data.token;
               params.bankCode = $scope.bank.id;
@@ -109,7 +109,7 @@
       $ionicLoading.show();
       MSApi.setPayPassword({
         sessionId: sessionId,
-        payPassword: user.payPassword
+        payPassword: md5.createHash($scope.user.payPassword)
       }).success(function(data) {
         if(data.flag === 1) {
           passwordPopup.close();
@@ -133,6 +133,8 @@
       params.vcode = $scope.card.vcode;
       MSApi.bindAndPay(params).success(function(data) {
         if(data.flag === 1) {
+          activeCredit();
+
           utils.confirm({
             title: '快捷支付开通成功！',
             content: '请童鞋设置支付密码 ，此密码将在您消费购物、充值提现时使用哦~',
@@ -153,6 +155,19 @@
           });
         }
       });
+    };
+
+    // active credit payment
+    var activeCredit = function() {
+      NonoWebApi.activePayment({
+        phone: user.phone
+      }).success(function(data) {
+        if(!data.result === 1) {
+          $log.info('active payment success');
+        } else {
+          $log.info('active payment failed');
+        }
+      })
     };
 
     $scope.$watch('bank', function(val) {
