@@ -133,7 +133,6 @@
             mobile: obj.phone,
             file: obj.file,
             fileName: obj.filename,
-            productId: PRODUCTID,
             msgKey: md5.createHash(OPENID + MERCHANT + obj.idNo + obj.phone)
           })
         })
@@ -152,7 +151,6 @@
             mobile: obj.phone,
             file: obj.file,
             fileName: obj.filename,
-            productId: PRODUCTID,
             msgKey: md5.createHash(OPENID + MERCHANT + obj.phone)
           })
         })
