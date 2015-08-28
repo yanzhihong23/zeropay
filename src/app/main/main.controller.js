@@ -8,8 +8,8 @@
   /** @ngInject */
   function MainController($scope, $state, $stateParams, $ionicLoading, $location, $log, OPENID, utils, userService, NonoWebApi, localStorageService) {
     var search = utils.getLocationSearch();
-    OPENID = search.openId || '9527';
-    $log.info('openId', OPENID);
+    // OPENID = search.openId || '9527';
+    // $log.info('openId', OPENID);
 
     if(search.clear) {
       $log.info('clear local storage');

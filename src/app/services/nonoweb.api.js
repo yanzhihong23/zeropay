@@ -6,10 +6,14 @@
     .service('NonoWebApi', NonoWebApi);
 
   /** @ngInject */
-  function NonoWebApi($http, md5, utils, APISERVER, OPENID, MERCHANT, PRODUCTID) {
+  function NonoWebApi($http, md5, utils, APISERVER, OPENID, MERCHANT, PRODUCTID, $log) {
   	var v = 'm.nonobank.com/msapi/'+ utils.getDate(),
   			vMd5 = md5.createHash(v),
   			headers = {'Authorization': vMd5,'Content-Type': 'application/x-www-form-urlencoded'};
+
+    var search = utils.getLocationSearch();
+    OPENID = search.openId || OPENID;
+    $log.info('openId in NonoWebApi', OPENID);
 
 		this.isRegister = function(obj) {
 			return $http({
