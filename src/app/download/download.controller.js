@@ -17,7 +17,7 @@
     	}, false);
     }
 
-    $scope.download = function() {
+    $scope.downloadIos = function() {
     	if(bridge) {
     		$log.info('downloadApp');
     		bridge.callHandler('downloadApp', {'foo': 'bar'}, function(response) {
@@ -25,6 +25,12 @@
     		});
     	} else {
     		$log.info('no js bridge');
+    	}
+    };
+
+    $scope.downloadAndroid = function() {
+			if(window.download) {
+    		window.download.downloadApp();
     	}
     };
   }
