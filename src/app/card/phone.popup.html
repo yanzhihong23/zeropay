@@ -6,7 +6,7 @@
 	<!-- <vcode ng-model="card.vcode" send="sendVcode" class="margin-vertical"></vcode> -->
 	<div class="send-vcode margin-vertical">
 		<div class="item item-input">
-			<input type="text" ng-model="card.vcode" placeholder="请输入验证码" required>
+			<input type="text" ng-model="card.vcode" ng-pattern="/^[\s\S]{6}$/" placeholder="请输入验证码" required>
 		</div>
 		<button type="button" class="button button-block button-assertive no-margin fs-sm" ng-disabled="resendCountdown || !card.phone" ng-click="sendVcode()">
 			<span ng-show="resendCountdown">{{resendCountdown}}秒后重新发送</span>

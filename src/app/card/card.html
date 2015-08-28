@@ -1,7 +1,7 @@
 <ion-view>
 	<ion-content>
 		<banner-credit></banner-credit>
-		
+
 		<step name="2" desc="绑定还款银行卡"></step>
 
 		<div class="item">
@@ -27,7 +27,8 @@
 
 		<div class="padding"></div>
 		<div class="dbl-margin">
-			<button class="button button-block button-assertive" ng-disabled="!user.idNo || user.phone" ng-click="submit()">开通</button>
+			<button class="button button-block button-assertive" ng-disabled="!user.idNo || 
+			!card.vcode || !card.phone" ng-click="submit()">开通</button>
 		</div>
 	</ion-content>
 </ion-view>
