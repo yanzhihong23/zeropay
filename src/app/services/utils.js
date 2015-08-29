@@ -6,7 +6,7 @@
     .factory('utils', utils);
 
   /** @ngInject */
-  function utils($ionicHistory, $timeout, $ionicPopup) {
+  function utils($ionicHistory, $timeout, $ionicPopup, $log, $rootScope) {
 		return {
 			getLocationSearch: function() {
 				var query_string = {};
@@ -110,6 +110,55 @@
 						obj.onCancel && obj.onCancel();
 					}
 				});
+			},
+			resizeImg: function(file, eventName) {
+				var header = 'data:' + file.filetype + ';base64,',
+						src = header + file.base64,
+						image = new Image(),
+						max_width = 1200,
+						max_height = 1200;
+
+				image.onload = function() {
+			  	var canvas = document.createElement('canvas');
+
+				  var width = image.width;
+				  var height = image.height;
+
+				  // calculate the width and height, constraining the proportions
+				  if (width > height) {
+				    if (width > max_width) {
+				      //height *= max_width / width;
+				      height = Math.round(height *= max_width / width);
+				      width = max_width;
+				    }
+				  } else {
+				    if (height > max_height) {
+				      //width *= max_height / height;
+				      width = Math.round(width *= max_height / height);
+				      height = max_height;
+				    }
+				  }
+
+				  // resize the canvas and draw the image data into it
+				  canvas.width = width;
+				  canvas.height = height;
+				  var ctx = canvas.getContext("2d");
+				  ctx.drawImage(image, 0, 0, width, height);
+				  $log.debug('width', width);
+				  $log.debug('height', height);
+				  $log.debug('result', canvas.toDataURL(file.filetype, 0.95));
+
+				  var result = canvas.toDataURL(file.filetype, 0.95).substring(header.length);
+				  // $log.debug(canvas.toDataURL(file.filetype, 0.7));
+				  $log.debug('compress result size', result.length);
+				  $log.debug('compress ratio', result.length/file.filesize);
+
+				  $rootScope.$broadcast(eventName, result);
+
+				  // return result;
+				};
+
+	      image.src = src;
 			}
 		}
   }

@@ -6,7 +6,7 @@
     .controller('IdController', IdController);
 
   /** @ngInject */
-  function IdController($scope, $state, $ionicLoading, $ionicPopup, $log, utils, userService, NonoWebApi, MSApi, md5) {
+  function IdController($scope, $rootScope, $state, $ionicLoading, $ionicPopup, $log, utils, userService, NonoWebApi, MSApi, md5) {
   	var frontPopup, 
   			holdPopup, 
         passwordPopup, 
@@ -50,26 +50,32 @@
       	$log.debug(newVal);
 
       	frontPopup.close();
-      	var params = {
-      		idNo: user.idNo,
-      		phone: user.phone,
-      		file: newVal.base64,
-      		filename: newVal.filename
-      	};
 
-        $ionicLoading.show();
-      	NonoWebApi.uploadCertPhoto(params).success(function(data) {
-      		if(+data.result === 1) {
-      			$log.info('cert photo auth success');
-      			authSuc = true;
+        $rootScope.$on('front', function(evt, data){
+          var params = {
+            idNo: user.idNo,
+            phone: user.phone,
+            file: data,
+            filename: newVal.filename
+          };
 
-            $scope.file.front.uploaded = true;
-      		} else {
-            utils.alert({content: data.message});
-          }
-      	}).error(function(data) {
-          $log.error('upload cert photo fail');
+          $ionicLoading.show();
+          NonoWebApi.uploadCertPhoto(params).success(function(data) {
+            if(+data.result === 1) {
+              $log.info('cert photo auth success');
+              authSuc = true;
+
+              $scope.file.front.uploaded = true;
+            } else {
+              utils.alert({content: data.message});
+            }
+          }).error(function(data) {
+            $log.error('upload cert photo fail');
+          });
         });
+
+        // resize image
+        utils.resizeImg(newVal, 'front');
       }
     });
 
@@ -78,22 +84,27 @@
       	$log.debug(newVal);
 
       	holdPopup.close();
-      	var params = {
-      		phone: user.phone,
-      		file: newVal.base64,
-      		filename: newVal.filename
-      	};
 
-        $ionicLoading.show();
-      	NonoWebApi.uploadHoldCertPhoto(params).success(function(data) {
-      		if(+data.result === 1) {
-            $scope.file.hold.uploaded = true;
-      		} else {
-            utils.alert({content: data.message});
-          }
-      	}).error(function(data) {
-          $log.error('upload hold photo fail');
-        })
+        $rootScope.$on('hold', function(evt, data){
+          var params = {
+            phone: user.phone,
+            file: data,
+            filename: newVal.filename
+          };
+
+          $ionicLoading.show();
+          NonoWebApi.uploadHoldCertPhoto(params).success(function(data) {
+            if(+data.result === 1) {
+              $scope.file.hold.uploaded = true;
+            } else {
+              utils.alert({content: data.message});
+            }
+          }).error(function(data) {
+            $log.error('upload hold photo fail');
+          });
+        });
+
+        utils.resizeImg(newVal, 'hold');
       }
     });
 
