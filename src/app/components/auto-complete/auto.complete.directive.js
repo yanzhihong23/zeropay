@@ -6,7 +6,7 @@
     .directive('autoComplete', autoComplete);
 
   /** @ngInject */
-  function autoComplete($log, $filter, $parse) {
+  function autoComplete($log, $filter, $parse, $timeout) {
     var directive = {
       restrict: 'A',
       // templateUrl: 'app/components/auto-complete/auto.complete.html',
@@ -28,10 +28,13 @@
 
           last = modelValue;
           if(results && results.length === 1 && !isDelete) {
-            element.val(results[0]);
-            last = results[0];
-            // ngModel listens for "input" event
-            element.triggerHandler('input');
+            // add timeout to fix ios issue
+            $timeout(function() {
+              element.val(results[0]);
+              last = results[0];
+              // ngModel listens for "input" event
+              element.triggerHandler('input');
+            }, 200);
           }
 
           $log.debug('last', last);
