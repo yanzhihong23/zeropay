@@ -57,6 +57,7 @@
       		filename: newVal.filename
       	};
 
+        $ionicLoading.show();
       	NonoWebApi.uploadCertPhoto(params).success(function(data) {
       		if(+data.result === 1) {
       			$log.info('cert photo auth success');
@@ -83,6 +84,7 @@
       		filename: newVal.filename
       	};
 
+        $ionicLoading.show();
       	NonoWebApi.uploadHoldCertPhoto(params).success(function(data) {
       		if(+data.result === 1) {
             $scope.file.hold.uploaded = true;

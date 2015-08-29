@@ -95,7 +95,7 @@
     this.activePayment = function(obj) {
       return $http({
         method: 'POST',
-        url: APISERVER.NONOWEB + '/creditPayment/activePayment',
+        url: APISERVER.NONOWEB + '/creditPayment/activatePayment',
         headers: headers,
         data: utils.param({
           request: JSON.stringify({
