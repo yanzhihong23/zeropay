@@ -33,13 +33,20 @@
           $scope.items = data.list.map(function(obj) {
             switch(obj.type) {
               case '0':
-                obj.type = '消费';
+                obj.type = '消费'; // -
+                obj.amount = '-' + obj.amount;
                 break;
               case '1':
-                obj.type = '还款';
+                obj.type = '还款'; // +
+                obj.amount = '+' + obj.amount;
                 break;
               case '2':
-                obj.type = '退款';
+                obj.type = '退款'; // +
+                obj.amount = '+' + obj.amount;
+                break;
+              case '6':
+                obj.type = '逾期'; // +
+                obj.amount = '-' + obj.amount;
                 break;
             }
             return obj;
