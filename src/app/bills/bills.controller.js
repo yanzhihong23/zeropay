@@ -18,7 +18,6 @@
     //   }
     // ];
 
-
     $scope.month = function(num) {
       $scope.date.add(num, 'months');
       getBillDetail();
@@ -26,7 +25,7 @@
 
     var getBillDetail = function() {
       $ionicLoading.show();
-      NonoWebApi.getAvailableCreditLine({
+      NonoWebApi.getBillDetail({
         fromDate: $scope.date.startOf('month').format('YYYY-MM-DD'),
         toDate: $scope.date.endOf('month').format('YYYY-MM-DD')
       }).success(function(data) {
