@@ -65,8 +65,7 @@
   					utils.alert({
   						content: '密码修改成功~',
   						callback: function() {
-  							// TODO
-  							$state.go('studentAuth');
+  							$state.go('home');
   						}
   					});
   				} else {
