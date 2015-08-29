@@ -112,7 +112,7 @@
     };
   }
 
-  function StudentAuthFailController($scope, $ionicPopup, $log, utils, userService) {
+  function StudentAuthFailController($scope, $ionicPopup, $ionicLoading, $log, utils, userService, MSApi) {
   	var myPopup;
 
   	$scope.data = {
@@ -126,6 +126,7 @@
   	$scope.submit = function() {
   		$log.debug('code', $scope.data.code);
 
+      $ionicLoading.show();
   		MSApi.studentCodeAuth($scope.data).success(function(data) {
   			if(data.flag === 1) {
   				$log.info('school auth success');

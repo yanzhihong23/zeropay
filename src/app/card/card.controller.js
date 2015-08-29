@@ -133,6 +133,13 @@
       params.vcode = $scope.card.vcode;
       MSApi.bindAndPay(params).success(function(data) {
         if(data.flag === 1) {
+          // save bind card success log
+          NonoWebApi.saveActionLog({
+            phone: user.phone,
+            actionType: 6,
+            actionResult: 1,
+            remark: '绑卡成功'
+          });
           activeCredit();
           payPasswordCheck();
         } else {

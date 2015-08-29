@@ -97,6 +97,13 @@
 
     $scope.submit = function() {
     	if(authSuc) {
+        // save upload success log
+        NonoWebApi.saveActionLog({
+          phone: user.phone,
+          actionType: 5,
+          actionResult: 1,
+          remark: '上传身份证成功'
+        });
         // active credit
         activeCredit();
         payPasswordCheck();
