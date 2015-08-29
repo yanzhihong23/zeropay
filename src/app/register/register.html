@@ -9,8 +9,8 @@
 
 			<div class="item item-input margin-top vcode">
 				<span class="input-label">验证码</span>
-				<input type="tel" placeholder="请输入验证码" ng-model="user.vcode" ng-pattern="/^[0-9]{4}$/" required>
-				<button class="button button-small button-assertive" ng-click="sendSms()" ng-disabled="!user.phone || resendCountdown">
+				<input type="tel" placeholder="请输入验证码" ng-model="user.vcode" ng-pattern="/^[0-9]{4}$/" maxlength="4" required>
+				<button type="button" class="button button-small button-assertive" ng-click="sendSms()" ng-disabled="!user.phone || resendCountdown">
 					<span ng-show="resendCountdown">{{resendCountdown}}秒后重新发送</span>
 					<span ng-hide="resendCountdown">发送验证码</span>
 				</button>

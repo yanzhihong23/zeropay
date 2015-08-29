@@ -10,7 +10,7 @@
 				</div>
 				<div class="item item-input">
 					<span class="input-label">身份证</span>
-					<input type="text" placeholder="请输入身份证" ng-model="user.idNo" id-number required>
+					<input type="text" placeholder="请输入身份证" ng-model="user.idNo"  ng-pattern="/^[\s\S]{15,18}$/" maxlength="18" id-number required>
 				</div>
 			</div>
 
