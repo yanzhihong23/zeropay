@@ -30,6 +30,10 @@
         toDate: $scope.date.endOf('month').format('YYYY-MM-DD')
       }).success(function(data) {
         if(+data.result === 1) {
+          data.list = data.list.filter(function(obj) {
+            return +obj.amount;
+          });
+
           $scope.items = data.list.map(function(obj) {
             switch(obj.type) {
               case '0':

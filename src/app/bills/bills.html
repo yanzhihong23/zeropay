@@ -6,7 +6,7 @@
 			<i class="icon ion-arrow-right-b energized" ng-click="month(1)"></i>
 		</div>
 		<ion-list>
-			<ion-item ng-repeat="item in items" ng-hide="+item.amount === 0">
+			<ion-item ng-repeat="item in items" ng-hide="+item.amount == 0">
 				<div class="fs-md">
 					{{item.type}}
 					<div class="pull-right" ng-class="{balanced: +item.amount>0, assertive: +item.amount<0}">
