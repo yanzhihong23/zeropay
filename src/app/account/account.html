@@ -1,9 +1,11 @@
 <ion-view id="account">
 	<ion-content>
 		<div class="top">
-			<div class="refund-tip dbl-padding-left" ng-show="account.repayment">
+			<div class="refund-tip dbl-padding-left" ng-show="account.overdueDays">
 				<img src="assets/images/horn.png" width="18px" alt="">
-				<small>您有一笔待还款<span class="assertive">{{account.repayment | currency: ''}}</span>元，<span class="assertive">{{account.overdueDays}}</span>天后到期</small>
+				<small>
+					已逾期<span class="assertive">{{account.overdueDays}}</span>天，需尽快还款
+				</small>
 			</div>
 
 			<div class="available dbl-padding">
