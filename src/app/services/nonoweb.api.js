@@ -178,6 +178,40 @@
       });
     };
 
+    this.isCertPhotoUploaded = function(obj) {
+      return $http({
+        method: 'POST',
+        url: APISERVER.NONOWEB + '/creditAuth/isUploadedCertPhoto',
+        headers: headers,
+        data: utils.param({
+          request: JSON.stringify({
+            openId: OPENID,
+            merchant: MERCHANT,
+            mobile: obj.phone,
+            productId: PRODUCTID,
+            msgKey: md5.createHash(OPENID + MERCHANT + obj.phone)
+          })
+        })
+      });
+    };
+
+    this.isHoldCertPhotoUploaded = function(obj) {
+      return $http({
+        method: 'POST',
+        url: APISERVER.NONOWEB + '/creditAuth/isUploadedTakeCertPhoto',
+        headers: headers,
+        data: utils.param({
+          request: JSON.stringify({
+            openId: OPENID,
+            merchant: MERCHANT,
+            mobile: obj.phone,
+            msgKey: md5.createHash(OPENID + MERCHANT + obj.phone)
+          })
+        })
+      });
+    };
+https://openapi.test.nonobank.com/nono-web/creditAuth/isUploadedTakeCertPhoto
+
     this.getAccountSummary = function() {
       return $http({
         method: 'POST',

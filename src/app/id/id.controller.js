@@ -49,7 +49,7 @@
       if (newVal) {
       	$log.debug(newVal);
 
-      	frontPopup.close();
+      	frontPopup && frontPopup.close();
 
         $rootScope.$on('front', function(evt, data){
           var params = {
@@ -83,7 +83,7 @@
       if (newVal) {
       	$log.debug(newVal);
 
-      	holdPopup.close();
+      	holdPopup && holdPopup.close();
 
         $rootScope.$on('hold', function(evt, data){
           var params = {
@@ -200,19 +200,48 @@
       })
     };
 
-    // init check
-    if(failCounter === 3) {
-      $scope.showMultiAuthFailAlert();
-      return;
-    }
+    var init = function() {
+      $ionicLoading.show();
+      // check whether cert photo is uploaded
+      NonoWebApi.isCertPhotoUploaded({phone: user.phone})
+        .success(function(data) {
+          $scope.file.front = $scope.file.front || {};
 
-    // save log
-    NonoWebApi.saveActionLog({
-      phone: user.phone,
-      actionType: 5,
-      actionResult: 2,
-      remark: '进入上传身份证流程'
-    });
-    userService.setProcess('uploadId');
+          if(+data.result === 1) {
+            $scope.file.front.uploaded = true;
+            authSuc = true;
+          }
+        }).finally(function() {
+          // check whether hold cert photo is uploaded
+          $ionicLoading.show();
+          NonoWebApi.isHoldCertPhotoUploaded({phone: user.phone})
+            .success(function(data) {
+              $scope.file.hold = $scope.file.hold || {};
+
+              if(+data.result === 1) {
+                $scope.file.hold.uploaded = true;
+              }
+            }).finally(function() {
+              if(!$scope.file.front.uploaded && !$scope.file.hold.uploaded) {
+                // init check
+                if(failCounter === 3) {
+                  $scope.showMultiAuthFailAlert();
+                  return;
+                } else {
+                  // save log
+                  NonoWebApi.saveActionLog({
+                    phone: user.phone,
+                    actionType: 5,
+                    actionResult: 2,
+                    remark: '进入上传身份证流程'
+                  });
+                  userService.setProcess('uploadId');
+                }
+              }
+            })
+        });
+    };
+
+    init();
   }
 })();
