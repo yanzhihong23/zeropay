@@ -81,6 +81,10 @@ input[readonly]:not(.cloned-text-input){
   background: rgba(0,0,0,.5);
 }
 
+.popup-container.popup-hidden{
+  visibility: hidden;
+}
+
 // overwrite ionic end
 
 .init-line-height{

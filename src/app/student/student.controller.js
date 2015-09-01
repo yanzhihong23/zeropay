@@ -140,7 +140,12 @@
   			} else {
   				$log.error('school auth fail', data.msg);
 
-  				utils.alert({content: data.msg});
+  				utils.alert({
+            content: data.msg,
+            callback: function() {
+              $scope.codeAuth();
+            }
+          });
   			}
   		}).finally(function() {
   			myPopup.close();
@@ -156,5 +161,17 @@
   		  cssClass: 'popup-large'
   		});
   	};
+
+    $scope.getCode = function() {
+      myPopup.close();
+      utils.alert({
+        title: '学信网查询码获得流程',
+        contentUrl: 'app/student/code.get.popup.html',
+        cssClass: 'popup-large',
+        callback: function() {
+          $scope.codeAuth();
+        }
+      })
+    };
   }
 })();
