@@ -44,6 +44,11 @@
         templateUrl: 'app/password/reset.html',
         controller: 'ResetPasswordController'
       })
+      .state('payPassword:forgot', {
+        url: '/pay.forgot?phone',
+        templateUrl: 'app/password/pay.forgot.html',
+        controller: 'PayPasswordController'
+      })
       .state('studentAuth', {
         url: '/studentAuth',
         templateUrl: 'app/student/student.html',

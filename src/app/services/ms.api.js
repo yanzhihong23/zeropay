@@ -77,6 +77,7 @@
   		});
   	};
 
+    // retrieve login passwor
   	this.sendSmsForRetrievePassword = function(obj) {
 			return $http({
 				method: 'POST',
@@ -112,6 +113,32 @@
 				})
 			});
 		};
+
+    // retrieve pay password
+    this.sendSmsForRetrievePayPassword = function(obj) {
+      return $http({
+        method: 'POST',
+        url: APISERVER.MSAPI + '/user/sendMobileMessageForPay',
+        headers: headers,
+        data: utils.param({
+          sessionId: obj.sessionId,
+          mobile: obj.phone
+        })
+      });
+    };
+
+    this.retrievePayPassword = function(obj) {
+      return $http({
+        method: 'POST',
+        url: APISERVER.MSAPI + '/user/saveNewPayPassword',
+        headers: headers,
+        data: utils.param({
+          sessionId: obj.sessionId,
+          validCode: obj.vcode,
+          newZFPwd: obj.password
+        })
+      });
+    };
 
     this.getBankListForKQ = function(obj) {
       return $http({
