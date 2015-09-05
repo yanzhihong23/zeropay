@@ -21,7 +21,7 @@
           idNo: user.idNo,
           mId: mId,
           idType: 0,
-          count: 0.01,
+          count: 1,
           key: null,
           type: null,
           payCode: 2,
@@ -46,6 +46,11 @@
     };
 
     $scope.showPhoneAuthPopup = function() {
+      if(!$scope.card.cardNo || !$scope.bank.name) {
+        utils.alert({content: '请先添加银行卡信息'});
+        return;
+      }
+
       phoneAuthPopup = $ionicPopup.show({
         title: '手机验证',
         templateUrl: 'app/card/phone.popup.html',
@@ -80,6 +85,7 @@
               params.token = data.token;
               params.bankCode = $scope.bank.id;
             } else {
+              phoneAuthPopup.close();
               utils.alert({
                 content: data.msg
               });
