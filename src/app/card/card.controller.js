@@ -7,11 +7,13 @@
     .controller('BankController', BankController);
 
   /** @ngInject */
-  function CardController($scope, $rootScope, $state, $ionicLoading, $ionicPopup, $log, userService, bankService, MSApi, NonoWebApi, utils, md5) {
+  function CardController($scope, $rootScope, $state, $ionicLoading, $ionicPopup, $ionicModal, $log, userService, bankService, MSApi, NonoWebApi, utils, md5) {
     var user = userService.getUser(),
         sessionId = userService.getSessionId(),
         mId = userService.getMId(),
         resendCountdown = utils.resendCountdown($scope),
+        payTosModal,
+        entrustPayTosModal,
         addCardPopup,
         phoneAuthPopup,
         passwordPopup,
@@ -34,7 +36,39 @@
     };
 
     $scope.bank = bankService.selected;
-    $scope.card = {};
+    $scope.card = {
+      phone: user.phone
+    };
+
+    $ionicModal.fromTemplateUrl('app/card/pay.tos.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      payTosModal = modal;
+    });
+
+    $ionicModal.fromTemplateUrl('app/card/pay.entrust.tos.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      entrustPayTosModal = modal;
+    });
+
+    $scope.showPayTosModal = function() {
+      payTosModal.show();
+    };
+
+    $scope.showEntrustPayTosModal = function() {
+      entrustPayTosModal.show();
+    };
+
+    $scope.closePayTosModal = function() {
+      payTosModal.hide();
+    };
+
+    $scope.closeEntrustPayTosModal = function() {
+      entrustPayTosModal.hide();
+    };
 
   	$scope.showAddCardPopup = function() {
       addCardPopup = $ionicPopup.show({
