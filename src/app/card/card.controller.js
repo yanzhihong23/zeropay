@@ -14,6 +14,7 @@
         resendCountdown = utils.resendCountdown($scope),
         payTosModal,
         entrustPayTosModal,
+        kycPopup,
         addCardPopup,
         phoneAuthPopup,
         passwordPopup,
@@ -32,7 +33,8 @@
 
     $scope.user = {
       realname: user.realname,
-      idNo: user.idNo
+      idNo: user.idNo,
+      kyc: user.realname && user.idNo
     };
 
     $scope.bank = bankService.selected;
@@ -68,6 +70,17 @@
 
     $scope.closeEntrustPayTosModal = function() {
       entrustPayTosModal.hide();
+    };
+
+    $scope.showKycPopup = function() {
+      if($scope.user.kyc) return;
+
+      kycPopup = $ionicPopup.show({
+        title: '实名信息',
+        templateUrl: 'app/card/kyc.popup.html',
+        scope: $scope,
+        cssClass: 'popup-large'
+      });
     };
 
   	$scope.showAddCardPopup = function() {
@@ -132,6 +145,11 @@
     $scope.selectBank = function() {
       addCardPopup.close();
       $state.go('banks');
+    };
+
+    // kyc popup
+    $scope.submitKyc = function() {
+      kycPopup.close();
     };
 
     // card popup

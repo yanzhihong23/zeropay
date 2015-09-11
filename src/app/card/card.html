@@ -4,9 +4,10 @@
 
 		<step name="2" desc="绑定还款银行卡"></step>
 
-		<div class="item">
+		<div class="item" ng-class="{'item-icon-right': !user.kyc}">
 			实名信息
-			<span class="item-note">{{user.realname}} {{user.idNo | idEncryptor}}</span>
+			<span class="item-note" ng-click="showKycPopup()" ng-show="user.realname">{{user.realname}} {{user.idNo | idEncryptor}}</span>
+			<i class="icon assertive" ng-class="{'ion-ios-plus-empty': !user.realname, 'ion-ios-compose-outline': user.realname && !user.kyc}" ng-click="showKycPopup()"></i>
 		</div>
 
 		<div class="item margin-top item-icon-right">
