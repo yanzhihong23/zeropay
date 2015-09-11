@@ -6,7 +6,7 @@
     .controller('AccountController', AccountController);
 
   /** @ngInject */
-  function AccountController($scope, $state, $ionicLoading, $ionicPopup, $log, NonoWebApi) {
+  function AccountController($scope, $state, $ionicLoading, $ionicPopup, $log, NonoWebApi, APISERVER) {
     $scope.account = {
       availabelCredit: 0,
       overdueDays: 0,
@@ -26,5 +26,7 @@
         $scope.account.lastRepaymentDate = data.map.lastRepaymentDate;
       }
     });
+
+    $scope.tosSrc = APISERVER.NONOWEB + '/delegateContractController/getDeleContract?contractType=0&billId=8';
   }
 })();

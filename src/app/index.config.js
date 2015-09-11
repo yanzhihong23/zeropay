@@ -6,7 +6,7 @@
     .config(config);
 
   /** @ngInject */
-  function config($logProvider, $httpProvider, $provide, localStorageServiceProvider) {
+  function config($logProvider, $httpProvider, $provide, $sceDelegateProvider, localStorageServiceProvider) {
     // Enable log
     $logProvider.debugEnabled(true);
 
@@ -35,6 +35,9 @@
     }]);
 
     localStorageServiceProvider.setPrefix('zeropay');
+
+
+    $sceDelegateProvider.resourceUrlWhitelist(['**']);
   }
 
 })();

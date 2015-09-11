@@ -37,5 +37,10 @@
     	return function(date, token) {
     		return moment(date).format(token);
     	};
+    })
+    .filter('trusted', function($sce) {
+      return function(url) {
+        return $sce.trustAsResourceUrl(url);
+      };
     });
 })();

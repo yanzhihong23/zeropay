@@ -96,15 +96,11 @@
             user.credit = credit;
             userService.setUser(user);
 
-    				Math.random()*10000 > 5000 ? $state.go('card') : $state.go('id');
+            // need to fix android webview issue
+            $state.go('card');
+    				// Math.random()*10000 > 5000 ? $state.go('card') : $state.go('id');
     			} else {
     				$log.error('school auth fail', data.message);
-
-            var user = userService.getUser();
-            // save realname and idNo for add card
-            user.realname = $scope.user.realname;
-            user.idNo = $scope.user.idNo;
-            userService.setUser(user);
 
     				$state.go('studentAuth:fail');
     			}
@@ -112,7 +108,7 @@
     };
   }
 
-  function StudentAuthFailController($scope, $ionicPopup, $ionicLoading, $log, utils, userService, MSApi) {
+  function StudentAuthFailController($scope, $state, $ionicPopup, $ionicLoading, $log, utils, userService, MSApi) {
   	var myPopup;
 
   	$scope.data = {
@@ -136,7 +132,8 @@
           user.credit = data.data.creditLine;
           userService.setUser(user);
 
-  				Math.random()*10000 > 5000 ? $state.go('card') : $state.go('id');
+          $state.go('card');
+  				// Math.random()*10000 > 5000 ? $state.go('card') : $state.go('id');
   			} else {
   				$log.error('school auth fail', data.msg);
 
