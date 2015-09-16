@@ -210,7 +210,6 @@
         })
       });
     };
-https://openapi.test.nonobank.com/nono-web/creditAuth/isUploadedTakeCertPhoto
 
     this.getAccountSummary = function() {
       return $http({
