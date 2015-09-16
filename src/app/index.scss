@@ -2,7 +2,10 @@
    sass dependencies when defined in the bower.json of your dependencies */
 // bower:scss
 // endbower
-
+$assertive:         #F9414D;
+$button-border-radius:  5px;
+$popup-border-radius:   5px;
+$button-border-width:   0;
 @import "../../bower_components/ionic/scss/ionic";
 
 $black:             #000;

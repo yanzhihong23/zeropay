@@ -1,6 +1,6 @@
 <ion-view id="account">
 	<ion-content>
-		<div class="top">
+		<div class="top white">
 			<div class="refund-tip dbl-padding-left" ng-show="account.overdueDays">
 				<img src="assets/images/horn.png" width="18px" alt="">
 				<small>
@@ -10,13 +10,13 @@
 
 			<div class="available dbl-padding">
 				<div>可用额度（元）
-					<div class="pull-right"><a ui-sref="agreements" class="black underline">相关协议</a></div>
+					<div class="pull-right"><a ui-sref="agreements" class="white underline">相关协议</a></div>
 				</div>
 				<div class="amount">{{account.availabelCredit | currency: ''}}</div>
 			</div>
 		</div>
 
-		<div class="row refund no-padding">
+		<div class="row refund no-padding white">
 			<div class="col-50 dbl-padding-left">
 				<div>应还金额（元）</div>
 				<div class="bold">{{account.repayment | currency: ''}}</div>
