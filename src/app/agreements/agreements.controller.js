@@ -7,14 +7,12 @@
 
   /** @ngInject */
   function AgreementsController($scope, $log, NonoWebApi, APISERVER) {
-    $scope.tab = 0;
+    $scope.contractType = 0; // 0: 委托支付协议, 1: 借款担保协议
+    $scope.link = APISERVER.NONOWEB + '/delegateContractController/getDeleContract?';
 
   	NonoWebApi.getBillIdList().success(function(data) {
       if(+data.result === 1) {
-        $scope.entrustItems = data.list.map(function(obj) {
-          obj.link = APISERVER.NONOWEB + '/delegateContractController/getDeleContract?contractType=0&billId=' + obj.billId; // 委托支付协议
-          return obj;
-        });
+        $scope.items = data.list;
       }
     });
   }

@@ -1,21 +1,15 @@
 <ion-view id="agreements">
 	<ion-content>
 		<div class="padding margin-horizontal">
-			<div class="button-bar padding" tab="{{tab}}">
-				<a class="button button-assertive" ng-click="tab = 0" ng-class="{ 'button-outline': tab===1 }">委托支付协议</a>
-				<a class="button button-assertive" ng-click="tab = 1" ng-class="{ 'button-outline': tab===0 }">借款担保协议</a>
+			<div class="button-bar padding">
+				<a class="button button-assertive" ng-click="contractType = 0" ng-class="{ 'button-outline': contractType===1 }">委托支付协议</a>
+				<a class="button button-assertive" ng-click="contractType = 1" ng-class="{ 'button-outline': contractType===0 }">借款担保协议</a>
 			</div>
 		</div>
 
-		<ion-list ng-show="tab === 0">
-			<a ng-href="{{item.link}}" ng-repeat="item in entrustItems" class="item">{{item.year}}年{{item.month}}月</a>
-			<ion-item class="text-center" ng-show="!entrustItems.length">
-				无协议
-			</ion-item>
-		</ion-list>
-		<ion-list ng-show="tab === 1">
-			<a ng-href="{{item.link}}" ng-repeat="item in assureItems" class="item">{{item.year}}年{{item.month}}月</a>
-			<ion-item class="text-center" ng-show="!assureItems.length">
+		<ion-list>
+			<a ng-href="{{link + 'contractType=' + contractType + '&billId=' + item.billId}}" ng-repeat="item in items" class="item">{{item.year}}年{{item.month}}月</a>
+			<ion-item class="text-center" ng-show="!items.length">
 				无协议
 			</ion-item>
 		</ion-list>
