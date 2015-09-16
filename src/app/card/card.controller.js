@@ -20,8 +20,8 @@
         passwordPopup,
         params = {
           sessionId: sessionId,
-          realname: user.realname,
-          idNo: user.idNo,
+          // realname: user.realname,
+          // idNo: user.idNo,
           mId: mId,
           idType: 0,
           count: 1,
@@ -122,6 +122,9 @@
           params.extRefNo = data.data;
           params.bankCardNo = $scope.card.cardNo;
           params.mobile = $scope.card.phone;
+
+          params.realname = $scope.user.realname;
+          params.idNo = $scope.user.idNo;
 
           $ionicLoading.show();
           MSApi.getPayVcode(params).success(function(data) {
