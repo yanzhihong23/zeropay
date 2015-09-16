@@ -258,6 +258,21 @@
       });
     };
 
+    this.getBillIdList = function(obj) {
+      return $http({
+        method: 'POST',
+        url: APISERVER.NONOWEB + '/creditPayment/getBillIdList',
+        headers: headers,
+        data: utils.param({
+          request: JSON.stringify({
+            openId: OPENID,
+            merchant: MERCHANT,
+            msgKey: md5.createHash(OPENID + MERCHANT)
+          })
+        })
+      });
+    };
+
     this.saveActionLog = function(obj) {
       return $http({
         method: 'POST',

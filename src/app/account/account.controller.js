@@ -26,7 +26,5 @@
         $scope.account.lastRepaymentDate = data.map.lastRepaymentDate;
       }
     });
-
-    $scope.tosSrc = APISERVER.NONOWEB + '/delegateContractController/getDeleContract?contractType=0&billId=8';
   }
 })();

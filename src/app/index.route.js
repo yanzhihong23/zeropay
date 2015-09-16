@@ -89,6 +89,11 @@
         templateUrl: 'app/download/download.html',
         controller: 'DownloadController'
       })
+      .state('agreements', {
+        url: '/agreements',
+        templateUrl: 'app/agreements/agreements.html',
+        controller: 'AgreementsController'
+      })
 
     $urlRouterProvider.otherwise('/');
   }
