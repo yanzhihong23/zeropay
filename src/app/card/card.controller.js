@@ -106,15 +106,6 @@
       });
     };
 
-    $scope.showPayPasswordPopup = function() {
-      passwordPopup = $ionicPopup.show({
-        title: '设置支付密码',
-        templateUrl: 'app/card/password.popup.html',
-        scope: $scope,
-        cssClass: 'popup-large'
-      });
-    };
-
     $scope.sendVcode = function() {
       $ionicLoading.show();
       MSApi.generateOrderNo({sessionId:sessionId}).success(function(data) {
@@ -165,29 +156,6 @@
       phoneAuthPopup.close();
     };
 
-    // pay password popup
-    $scope.submitPayPassword = function() {
-      $ionicLoading.show();
-      MSApi.setPayPassword({
-        sessionId: sessionId,
-        payPassword: md5.createHash($scope.user.payPassword)
-      }).success(function(data) {
-        if(data.flag === 1) {
-          passwordPopup.close();
-
-          utils.alert({
-            title: '恭喜您',
-            content: '支付密码设置成功',
-            callback: function() {
-              $state.go('account');
-            }
-          });
-        } else {
-          $log.error('set pay password failed', data.msg);
-        }
-      })
-    };
-
     // bind card
     $scope.submit = function() {
       $ionicLoading.show();
@@ -228,7 +196,7 @@
           okText: '马上设置',
           cancelText: '下次再设置',
           onOk: function() {
-            $scope.showPayPasswordPopup();
+            $scope.enablePayPaswordCheck = true;
           },
           onCancel: function() {
             $state.go('account');
