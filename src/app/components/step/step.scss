@@ -2,7 +2,7 @@
 	font-family: 'HeiTi SC';
 	font-weight: bold;
 	.row{
-		padding: 0;
+		padding: 15px 0;
 	}
 	.circle{
 		$size: 75px;
@@ -13,7 +13,7 @@
 		border: solid 5px $gray-light;
 		color: $white;
 		text-align: center;
-		margin: 15px auto;
+		margin: 0 auto;
 		.name{
 			padding-top: 10px;
 		}
