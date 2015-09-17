@@ -1,0 +1,11 @@
+<div class="item item-input item-icon-right auto-complete">
+	<span class="input-label">{{label}}</span>
+	<i class="icon ion-ios-search"></i>
+	<input type="text" placeholder="{{placeholder}}" ng-model="input" ng-focus="focus()" ng-blur="blur()" required>
+	<ion-list class="suggestions" ng-if="showSuggestions">
+		<ion-item ng-repeat="item in results" ng-click="select($index)">
+			{{item}}
+		</ion-item>
+	</ion-list>
+</div>
+
