@@ -8,7 +8,7 @@
     .constant('PRODUCTID', '90')
     .value('OPENID', '9527')
     .factory('APISERVER', function(HOST, $location) {
-    	var host = /nonobank.com/.test($location.host()) ? $location.protocol() + '://' + $location.host() : HOST;
+    	var host = /nonobank.com/.test($location.host()) ? $location.protocol() + '://' + $location.host() + ($location.port() ? ':' + $location.port() : '') : HOST;
     	return {
     		MSAPI: host + '/msapi',
     		NONOWEB: host + '/nono-web'
