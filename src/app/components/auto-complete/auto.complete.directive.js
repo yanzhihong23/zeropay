@@ -8,43 +8,48 @@
   /** @ngInject */
   function autoComplete($log, $filter, $parse, $timeout) {
     var directive = {
-      restrict: 'A',
-      // templateUrl: 'app/components/auto-complete/auto.complete.html',
+      restrict: 'E',
+      templateUrl: 'app/components/auto-complete/auto.complete.html',
       require:"ngModel",
+      replace: true,
+      scope: {
+        input: '=ngModel',
+        options: '='
+      },
       link: function(scope, element, attr, ngModel) {
-        console.log(attr.ngModel);
-        var options, last, isDelete = false;
+        var options = scope.options, last, isDelete = false;
 
-        scope.$watch(function() {
-          return ngModel.$modelValue;
-        }, function(modelValue, old) {
-          $log.debug('searchText', modelValue);
+        scope.label = attr.label;
+        scope.placeholder = attr.placeholder;
 
-          var results = $filter('filter')(options, modelValue);
-          $log.debug('results', results);
+        scope.$watch('input', function(modelValue, old) {
+          scope.showSuggestions = !!modelValue && last !== modelValue;
+
+          var results = scope.results = $filter('filter')(options, modelValue).slice(0, 5);
 
           isDelete = last && last.substr(0, last.length - 1) === modelValue;
-          $log.debug('isDelete', isDelete);
 
           last = modelValue;
           if(results && results.length === 1 && !isDelete) {
-            // add timeout to fix ios issue
             $timeout(function() {
-              element.val(results[0]);
-              last = results[0];
-              // ngModel listens for "input" event
-              element.triggerHandler('input');
+              scope.input = last = results[0];
+              scope.showSuggestions = false;
             }, 200);
           }
-
-          $log.debug('last', last);
-          $log.debug('modelValue', ngModel.$modelValue);
         });
 
-        scope.$watch(attr.options, function(val) {
-          // $log.debug('options', val);
-          if(val) options = val;
-        });
+        scope.focus = function() {
+          document.querySelectorAll('[nav-view="active"] .scroll')[0].style.transform = 'translate3d(0%, -216px, 0px)'
+        };
+
+        scope.blur = function() {
+          document.querySelectorAll('[nav-view="active"] .scroll')[0].style.transform = 'translate3d(0, 0, 0)'
+        }
+
+        scope.select = function(index) {
+          scope.input = last = scope.results[index];
+          scope.showSuggestions = false;
+        };
       }
     };
 

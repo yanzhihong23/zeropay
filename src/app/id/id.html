@@ -25,5 +25,7 @@
 			<button class="button button-block button-assertive no-margin" ng-disabled="!file.front.uploaded || !file.hold.uploaded" ng-click="submit()">提交</button>
 		</div>
 
+		<set-pay-password ng-if="enablePayPaswordCheck"></set-pay-password>
+
 	</ion-content>
 </ion-view>

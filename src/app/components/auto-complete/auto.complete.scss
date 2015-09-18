@@ -1,4 +1,26 @@
 .auto-complete{
-	font-size: 14px;
+	position: relative;
+	overflow: visible;
+	.icon{
+		font-size: 22px;
+    right: 5px !important;
+	}
+}
+.suggestions{
+	position: absolute;
+	width: 70%;
+	top: 100%;
+	left: 30%;
+	z-index: 1000;
+	.item{
+		padding: 13px 0 12px 10px;
+	}
+	display: none;
+	input:focus+&{
+		display: block;
+	}
+	input:focus{
+		transform: translate3d(0%, -100px, 0px);
+	}
 }
 

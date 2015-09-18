@@ -7,18 +7,18 @@
     .controller('StudentAuthFailController', StudentAuthFailController);
 
   /** @ngInject */
-  function StudentAuthController($scope, $state, $ionicActionSheet, $ionicPopup, $ionicLoading, $log, NonoWebApi, localStorageService, userService, utils) {
+  function StudentAuthController($scope, $state, $ionicActionSheet, $ionicPopup, $ionicLoading, $filter, $log, NonoWebApi, localStorageService, userService, utils) {
   	$scope.user = {
   		phone: userService.getUser().phone
   	};
 
   	var initSchoolList = function() {
-  		$scope.schoolList = localStorageService.get('schoolList');
-  		if(!$scope.schoolList) {
+  		$scope.schoolList = localStorageService.get('schoolList') || [];
+  		if(!$scope.schoolList.length) {
   			NonoWebApi.getSchoolList().success(function(data) {
   				if(+data.result === 1) {
-  					$scope.schoolList = data.list.map(function(obj) {
-  						return obj.name;
+  					data.list.map(function(obj) {
+              $scope.schoolList.push(obj.name);
   					});
 
   					localStorageService.add('schoolList', $scope.schoolList);
@@ -79,7 +79,28 @@
 			});
     };
 
+    // check whether school in valid
+    $scope.$watch('user.school', function(val) {
+      $scope.user.validSchool = false;
+
+      if(val) {
+        $filter('filter')($scope.schoolList, val).forEach(function(str) {
+          if(str === val) {
+            $scope.user.validSchool = true;
+            return;
+          }
+        })
+      }
+    }, true);
+
     $scope.submit = function() {
+      if(!$scope.user.validSchool) {
+        utils.alert({
+          content: '学校名称不存在，请再次确认~'
+        });
+        return;
+      }
+      
     	$ionicLoading.show();
 
     	NonoWebApi.authenticateSchoolRoll($scope.user)

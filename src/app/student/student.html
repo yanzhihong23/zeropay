@@ -15,15 +15,13 @@
 			</div>
 
 			<div class="margin-top">
-				<div class="item item-input">
-					<span class="input-label">学校</span>
-					<input type="text" placeholder="请输入学校名称" auto-complete options="schoolList" ng-model="user.school" required>
-				</div>
-				<div class="item item-input item-arrow-down">
+				<auto-complete options="schoolList" ng-model="user.school" label="学校" placeholder="请输入学校名称"></auto-complete>
+
+				<div class="item item-input item-arrow-down zero-z-index">
 					<span class="input-label">学历</span>
 					<input type="text" placeholder="请选择学历" ng-model="user.degree" ng-click="selectDegree()" readonly required>
 				</div>
-				<div class="item item-input item-arrow-down">
+				<div class="item item-input item-arrow-down zero-z-index">
 					<span class="input-label">入学年份</span>
 					<input type="text" placeholder="请选择入学年份" ng-model="user.year" ng-click="selectYear()" readonly required>
 				</div>

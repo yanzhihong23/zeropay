@@ -16,7 +16,6 @@
         sessionId = userService.getSessionId();
 
   	$scope.file = {};
-    $scope.user = {}; // for set pay password
 
   	$scope.showFrontPopup = function() {
   		frontPopup = $ionicPopup.show({
@@ -147,22 +146,13 @@
           okText: '马上设置',
           cancelText: '下次再设置',
           onOk: function() {
-            setPayPassword();
+            $scope.enablePayPaswordCheck = true;
           },
           onCancel: function() {
             $state.go('account');
           }
         });
       }
-    };
-
-    var setPayPassword = function() {
-      passwordPopup = $ionicPopup.show({
-        title: '设置支付密码',
-        templateUrl: 'app/card/password.popup.html',
-        scope: $scope,
-        cssClass: 'popup-large'
-      });
     };
 
     // active credit payment
@@ -174,28 +164,6 @@
           $log.info('active payment success');
         } else {
           $log.info('active payment failed');
-        }
-      })
-    };
-
-    // pay password popup
-    $scope.submitPayPassword = function() {
-      MSApi.setPayPassword({
-        sessionId: sessionId,
-        payPassword: md5.createHash($scope.user.payPassword)
-      }).success(function(data) {
-        if(data.flag === 1) {
-          passwordPopup.close();
-
-          utils.alert({
-            title: '恭喜您',
-            content: '支付密码设置成功',
-            callback: function() {
-              $state.go('account');
-            }
-          });
-        } else {
-          $log.error('set pay password failed', data.msg);
         }
       })
     };
