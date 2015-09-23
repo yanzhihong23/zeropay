@@ -120,7 +120,9 @@
             // need to fix android webview issue
             $state.go('card');
     				// Math.random()*10000 > 5000 ? $state.go('card') : $state.go('id');
-    			} else {
+    			} else if(+data.result === 2) {
+            utils.alert({content: data.message});
+          } else {
     				$log.error('school auth fail', data.message);
 
     				$state.go('studentAuth:fail');
