@@ -8,12 +8,13 @@
 }
 .suggestions{
 	position: absolute;
-	width: 70%;
+	width: 100%;
 	top: 100%;
-	left: 30%;
+	left: 0;
 	z-index: 1000;
 	.item{
-		padding: 13px 0 12px 10px;
+		padding: 13px 0 12px 33%;
+		color: $gray;
 	}
 	display: none;
 	input:focus+&{
