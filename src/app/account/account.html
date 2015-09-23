@@ -19,7 +19,8 @@
 		<div class="row refund no-padding">
 			<div class="col-50 dbl-padding-left">
 				<div>应还金额（元）</div>
-				<div class="bold">{{account.repayment | currency: ''}}</div>
+				<div ng-show="account.repayment" class="bold">{{account.repayment | currency: ''}}</div>
+				<div ng-hide="account.repayment">未出账单</div>
 			</div>
 			<div class="col-50">
 				<div>还款日期</div>

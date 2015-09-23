@@ -3,18 +3,8 @@
 		<step name="1" desc="学籍认证" class="white-bg"></step>
 
 		<form name="authForm" ng-submit="submit()">
-			<div class="margin-top">
-				<div class="item item-input">
-					<span class="input-label">姓名</span>
-					<input type="text" placeholder="请输入姓名" ng-model="user.realname" required>
-				</div>
-				<div class="item item-input">
-					<span class="input-label">身份证</span>
-					<input type="text" placeholder="请输入身份证" ng-model="user.idNo"  ng-pattern="/^[\s\S]{15,18}$/" maxlength="18" id-number required>
-				</div>
-			</div>
-
-			<div class="margin-top">
+			<section>
+				<div class="fs-xs gray padding content-algin-item">仅用于在线学籍验证，名校贷将确保您的信息安全！</div>
 				<auto-complete options="schoolList" ng-model="user.school" label="学校" placeholder="请输入学校名称"></auto-complete>
 
 				<div class="item item-input item-arrow-down zero-z-index">
@@ -25,9 +15,20 @@
 					<span class="input-label">入学年份</span>
 					<input type="text" placeholder="请选择入学年份" ng-model="user.year" ng-click="selectYear()" readonly required>
 				</div>
-			</div>
+			</section>
 
-			<div class="dbl-margin">
+			<section class="margin-top zero-z-index">
+				<div class="item item-input zero-z-index">
+					<span class="input-label">姓名</span>
+					<input type="text" placeholder="请输入姓名" ng-model="user.realname" required>
+				</div>
+				<div class="item item-input zero-z-index">
+					<span class="input-label">身份证</span>
+					<input type="text" placeholder="请输入身份证" ng-model="user.idNo"  ng-pattern="/^[\s\S]{4,18}$/" maxlength="18" id-number required>
+				</div>
+			</section>
+
+			<div class="dbl-margin zero-z-index">
 				<button class="button button-block button-assertive" ng-disabled="authForm.$invalid">下一步</button>
 			</div>
 		</form>

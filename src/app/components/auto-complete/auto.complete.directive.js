@@ -39,11 +39,11 @@
         });
 
         scope.focus = function() {
-          document.querySelectorAll('[nav-view="active"] .scroll')[0].style.transform = 'translate3d(0%, -216px, 0px)'
+          // document.querySelectorAll('[nav-view="active"] .scroll')[0].style.transform = 'translate3d(0%, -216px, 0px)'
         };
 
         scope.blur = function() {
-          document.querySelectorAll('[nav-view="active"] .scroll')[0].style.transform = 'translate3d(0, 0, 0)'
+          // document.querySelectorAll('[nav-view="active"] .scroll')[0].style.transform = 'translate3d(0, 0, 0)'
         }
 
         scope.select = function(index) {
