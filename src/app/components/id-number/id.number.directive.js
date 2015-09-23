@@ -13,6 +13,14 @@
       link: function(scope, element, attr, ngModel) {
         element.parent().addClass('relative id-number').append('<div class="display"></div>');
 
+        element.bind('focus', function() {
+          element.parent().addClass('z5');
+        });
+
+        element.bind('blur', function() {
+          element.parent().removeClass('z5');
+        });
+
         scope.$watch(function() {
           return ngModel.$modelValue;
         }, function(val) {
