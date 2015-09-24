@@ -10,13 +10,13 @@
 			<i class="icon assertive" ng-class="{'ion-ios-plus-empty': !user.realname, 'ion-ios-compose-outline': user.realname && !user.kyc}" ng-click="showKycPopup()"></i>
 		</div>
 		<div class="fs-xs gray padding content-algin-item">仅用于在线学籍验证，名校贷将确保您的信息安全！</div>
-		<div class="item margin-top item-icon-right">
+		<div class="item item-icon-right">
 			银行卡信息
 			<span class="item-note" ng-click="showAddCardPopup()">{{bank.name}} <span ng-show="card.cardNo">尾号</span>{{card.cardNo | tailNo}}</span>
 			<i class="icon assertive" ng-class="{'ion-ios-plus-empty': !bank.name, 'ion-ios-compose-outline': bank.name}" ng-click="showAddCardPopup()"></i>
 		</div>
 
-		<div class="padding assertive content-algin-item">为确保资金安全，必须是本人实名的储蓄卡哦</div>
+		<div class="padding assertive content-algin-item fs-xs">为确保资金安全，必须是本人实名的储蓄卡哦</div>
 
 		<div class="item item-icon-right">
 			手机验证
@@ -25,7 +25,7 @@
 			</span>
 			<i class="icon assertive" ng-class="{'ion-ios-plus-empty': !card.vcode, 'ion-ios-compose-outline': card.vcode}" ng-click="showPhoneAuthPopup()"></i>
 		</div>
-		<div class="padding gray content-algin-item">*部分银行绑卡会暂扣1元钱，该金额将于24小时内退还至平台余额。</div>
+		<div class="padding gray content-algin-item fs-xs">*部分银行绑卡会暂扣1元钱，该金额将于24小时内退还至平台余额。</div>
 
 		<div class="padding"></div>
 		<div class="dbl-margin">

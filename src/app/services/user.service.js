@@ -6,48 +6,64 @@
     .service('userService', userService);
 
     /** @ngInject */
-    function userService(localStorageService, MSApi, $timeout, $log) {
-      var self = this;
+    function userService(localStorageService, MSApi, OPENID, $timeout, $log) {
+      $log.debug('userService');
+
+      var self = this,
+          USER = 'user_' + OPENID,
+          SESSIONID = 'sessionId_' + OPENID,
+          MID = 'mId_' + OPENID,
+          PROGRESS = 'progress_' + OPENID,
+          AUTHINFO = 'authInfo_' + OPENID,
+          COUNTER = 'counter_' + OPENID;
 
       this.setUser = function(user) {
-        localStorageService.add('user', user);
+        localStorageService.add(USER, user);
         self.autoLogin();
       };
 
       this.getUser = function() {
-        return localStorageService.get('user');
+        return localStorageService.get(USER);
       };
 
       this.setSessionId = function(sessionId) {
-        localStorageService.add('sessionId', sessionId);
+        localStorageService.add(SESSIONID, sessionId);
       };
 
       this.getSessionId = function() {
-        return localStorageService.get('sessionId');
+        return localStorageService.get(SESSIONID);
       };
 
       this.setMId = function(mId) {
-        localStorageService.add('mId', mId);
+        localStorageService.add(MID, mId);
       };
 
       this.getMId = function() {
-        return localStorageService.get('mId');
+        return localStorageService.get(MID);
       };
 
       this.setIdAuthFailCounter = function(counter) {
-        localStorageService.add('idAuthFailCounter', counter);
+        localStorageService.add(COUNTER, counter);
       };
 
       this.getIdAuthFailCounter = function() {
-        return localStorageService.get('idAuthFailCounter');
+        return localStorageService.get(COUNTER);
       };
 
       this.setProcess = function(process) {
-        localStorageService.add('process', process);
+        localStorageService.add(PROGRESS, process);
       };
 
       this.getProcess = function() {
-        return localStorageService.get('process');
+        return localStorageService.get(PROGRESS);
+      };
+
+      this.setAuthInfo = function(info) {
+        localStorageService.add(AUTHINFO, info);
+      };
+
+      this.getAuthInfo = function() {
+        return localStorageService.get(AUTHINFO);
       };
 
 
@@ -64,7 +80,7 @@
 
                   $timeout(login, 1200000); // 20 min
                 } else {
-                  localStorageService.remove('user');
+                  localStorageService.remove(USER);
                 }
               });
           };
