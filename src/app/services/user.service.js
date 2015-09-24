@@ -50,6 +50,14 @@
         return localStorageService.get('process');
       };
 
+      this.setAuthInfo = function(info) {
+        localStorageService.add('authInfo', info);
+      };
+
+      this.getAuthInfo = function() {
+        return localStorageService.get('authInfo');
+      };
+
 
       this.autoLogin = function() {
         var user = self.getUser();
