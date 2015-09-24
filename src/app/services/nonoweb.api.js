@@ -11,10 +11,6 @@
   			vMd5 = md5.createHash(v),
   			headers = {'Authorization': vMd5,'Content-Type': 'application/x-www-form-urlencoded'};
 
-    var search = utils.getLocationSearch();
-    OPENID = search.openId || OPENID;
-    $log.info('openId in NonoWebApi', OPENID);
-
 		this.isRegister = function(obj) {
 			return $http({
   			method: 'POST',
