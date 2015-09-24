@@ -6,7 +6,7 @@
     .directive('setPayPassword', setPayPassword);
 
   /** @ngInject */
-  function setPayPassword($ionicPopup, userService, MSApi, $ionicLoading, md5, utils, $log) {
+  function setPayPassword($ionicPopup, $state, userService, MSApi, $ionicLoading, md5, utils, $log) {
     var directive = {
       restrict: 'E',
       scope: true,
