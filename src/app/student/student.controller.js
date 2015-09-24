@@ -8,9 +8,9 @@
 
   /** @ngInject */
   function StudentAuthController($scope, $state, $ionicActionSheet, $ionicPopup, $ionicLoading, $filter, $log, NonoWebApi, localStorageService, userService, utils) {
-  	$scope.user = {
-  		phone: userService.getUser().phone
-  	};
+    var authInfo = userService.getAuthInfo();
+
+    $scope.user = authInfo || {phone: userService.getUser().phone};
 
   	var initSchoolList = function() {
   		$scope.schoolList = localStorageService.get('schoolList') || [];
@@ -93,6 +93,10 @@
       }
     }, true);
 
+    var saveAuthInfo = function() {
+      userService.setAuthInfo($scope.user);
+    };
+
     $scope.submit = function() {
       if(!$scope.user.validSchool) {
         utils.alert({
@@ -100,7 +104,7 @@
         });
         return;
       }
-      
+
     	$ionicLoading.show();
 
     	NonoWebApi.authenticateSchoolRoll($scope.user)
@@ -120,9 +124,13 @@
             // need to fix android webview issue
             $state.go('card');
     				// Math.random()*10000 > 5000 ? $state.go('card') : $state.go('id');
-    			} else {
-    				$log.error('school auth fail', data.message);
+    			} else if(+data.result === 2) {
+            saveAuthInfo();
+            utils.alert({content: data.message});
+          } else {
+            $log.error('school auth fail', data.message);
 
+            saveAuthInfo();
     				$state.go('studentAuth:fail');
     			}
     		});
