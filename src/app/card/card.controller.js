@@ -210,7 +210,7 @@
       NonoWebApi.activePayment({
         phone: user.phone
       }).success(function(data) {
-        if(!data.result === 1) {
+        if(+data.result === 1) {
           $log.info('active payment success');
         } else {
           $log.info('active payment failed');
