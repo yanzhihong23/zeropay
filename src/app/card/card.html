@@ -9,7 +9,7 @@
 			<span class="item-note" ng-click="showKycPopup()" ng-show="user.idNo">{{user.realname}} {{user.idNo | idEncryptor}}</span>
 			<i class="icon assertive" ng-class="{'ion-ios-plus-empty': !user.realname, 'ion-ios-compose-outline': user.realname && !user.kyc}" ng-click="showKycPopup()"></i>
 		</div>
-		<div class="fs-xs gray padding content-algin-item">仅用于在线学籍验证，名校贷将确保您的信息安全！</div>
+		<div class="fs-xs gray padding content-algin-item">仅用于开通第三方支付验证，名校贷将确保您的信息安全！</div>
 		<div class="item item-icon-right">
 			银行卡信息
 			<span class="item-note" ng-click="showAddCardPopup()">{{bank.name}} <span ng-show="card.cardNo">尾号</span>{{card.cardNo | tailNo}}</span>
