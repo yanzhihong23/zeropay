@@ -33,3 +33,10 @@
 		}
 	}
 }
+
+@media only screen 
+and (max-device-height : 568px) {
+	#account .bottom{
+		position: relative;
+	}
+}
