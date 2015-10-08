@@ -31,6 +31,8 @@
           payMode: 1
         };
 
+    var simpleAuthCounter = userService.getSimpleAuthFailCounter();
+
     $scope.user = {
       realname: user.realname,
       idNo: user.idNo,
@@ -83,7 +85,7 @@
       });
     };
 
-  	$scope.showAddCardPopup = function() {
+    $scope.showAddCardPopup = function() {
       addCardPopup = $ionicPopup.show({
         title: '银行卡信息',
         templateUrl: 'app/card/card.popup.html',
@@ -177,6 +179,56 @@
             content: data.msg,
             okText: '我知道了'
           });
+        }
+      });
+    };
+
+    var showAlert = function(title) {
+      utils.alert({
+        title: title,
+        contentUrl: 'app/card/error.html',
+        cssClass: 'popup-large'
+      });
+    };
+
+    // YB simple auth 
+    $scope.simpleAuth = function() {
+      if(simpleAuthCounter >= 4) {
+        showAlert('银行卡号卡号验证失败，请明日再进行认证');
+        return;
+      }
+
+      $ionicLoading.show();
+      NonoWebApi.simpleAuth({
+        realname: $scope.user.realname,
+        idNo: $scope.user.idNo,
+        bankCode: $scope.bank.id,
+        cardNo: $scope.card.cardNo
+      }).success(function(data) {
+        if(data.code == '0000') {
+          activeCredit();
+          payPasswordCheck();
+        } else {
+          simpleAuthCounter++;
+          userService.setSimpleAuthFailCounter(simpleAuthCounter);
+
+          var title = '';
+          switch(simpleAuthCounter) {
+            case 1:
+              title = '银行卡号与您的身份信息不匹配（今日验证机会还有2次）';
+              break;
+            case 2:
+              title = '银行卡号与您的身份信息不匹配（今日验证机会还有1次）';
+              break;
+            case 3:
+              title = '银行卡号与您的身份信息不匹配，请再次确认';
+              break;
+            default:
+              title = '银行卡号与身份信息不匹配（请明日再认证银行卡）';
+              break;
+          }
+
+          showAlert(title);
         }
       });
     };
