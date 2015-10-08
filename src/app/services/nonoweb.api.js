@@ -91,7 +91,7 @@
     this.activePayment = function(obj) {
       return $http({
         method: 'POST',
-        url: APISERVER.NONOWEB + '/creditPayment/activatePayment',
+        url: APISERVER.NONOWEB + '/creditPayment/activatePaymentTemp',
         headers: headers,
         data: utils.param({
           request: JSON.stringify({
@@ -287,5 +287,21 @@
         })
       });
     };
+
+    // YB auth
+    this.simpleAuth = function(obj) {
+      return $http({
+        method: 'POST',
+        url: APISERVER.NONOWEB + '/auth/simpleAuth',
+        headers: {'Content-Type': 'application/json'},
+        data: {
+            name: obj.realname,
+            certificateNo: obj.idNo,
+            bankName: obj.bankCode,
+            bankCard: obj.cardNo,
+            provider: 'YB_FASTPAY'
+          }
+      });
+    }
   }
 })();
