@@ -15,7 +15,8 @@
           MID = 'mId_' + OPENID,
           PROGRESS = 'progress_' + OPENID,
           AUTHINFO = 'authInfo_' + OPENID,
-          COUNTER = 'counter_' + OPENID;
+          COUNTER = 'counter_' + OPENID,
+          SIMPLE_AUTH_COUNTER = 'simple_auth_counter_' + OPENID;
 
       this.setUser = function(user) {
         localStorageService.add(USER, user);
@@ -64,6 +65,14 @@
 
       this.getAuthInfo = function() {
         return localStorageService.get(AUTHINFO);
+      };
+
+      this.setSimpleAuthFailCounter = function(counter) {
+        localStorageService.add(SIMPLE_AUTH_COUNTER, counter);
+      };
+
+      this.getSimpleAuthFailCounter = function() {
+        return localStorageService.get(SIMPLE_AUTH_COUNTER) || 0;
       };
 
 
