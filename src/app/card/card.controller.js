@@ -279,7 +279,7 @@
     // save log
     NonoWebApi.saveActionLog({
       phone: user.phone,
-      actionType: 6,
+      actionType: 10,
       actionResult: 2,
       remark: '进入绑卡流程'
     });
