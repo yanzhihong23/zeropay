@@ -167,9 +167,9 @@
           // save bind card success log
           NonoWebApi.saveActionLog({
             phone: user.phone,
-            actionType: 6,
+            actionType: 10,
             actionResult: 1,
-            remark: '绑卡成功'
+            remark: '易宝三要素认证通过'
           });
           activeCredit();
           payPasswordCheck();
@@ -281,7 +281,7 @@
       phone: user.phone,
       actionType: 10,
       actionResult: 2,
-      remark: '进入绑卡流程'
+      remark: '进入易宝三要素认证'
     });
     userService.setProcess('bindCard');
   } // CardController end
