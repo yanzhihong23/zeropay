@@ -165,12 +165,7 @@
       MSApi.bindAndPay(params).success(function(data) {
         if(data.flag === 1) {
           // save bind card success log
-          NonoWebApi.saveActionLog({
-            phone: user.phone,
-            actionType: 10,
-            actionResult: 1,
-            remark: '易宝三要素认证通过'
-          });
+          saveActionLog(true);
           activeCredit();
           payPasswordCheck();
         } else {
@@ -206,6 +201,7 @@
         cardNo: $scope.card.cardNo
       }).success(function(data) {
         if(data.code == '0000') {
+          saveActionLog(true);
           activeCredit();
           payPasswordCheck();
         } else {
@@ -276,13 +272,18 @@
       }
     }, true);
 
+    var saveActionLog = function(isSucc) {
+      NonoWebApi.saveActionLog({
+        phone: user.phone,
+        actionType: 10,
+        actionResult: isSucc ? 1 : 2,
+        remark: isSucc ? '易宝三要素认证通过' : '进入易宝三要素认证'
+      });
+    };
+
     // save log
-    NonoWebApi.saveActionLog({
-      phone: user.phone,
-      actionType: 10,
-      actionResult: 2,
-      remark: '进入易宝三要素认证'
-    });
+    saveActionLog();
+
     userService.setProcess('bindCard');
   } // CardController end
 
