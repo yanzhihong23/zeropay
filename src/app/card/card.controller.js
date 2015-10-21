@@ -167,6 +167,7 @@
           // save bind card success log
           saveActionLog(true);
           activeCredit();
+          payPasswordCheck();
         } else {
           utils.alert({
             title: 'sorry，还款卡绑定失败！',
@@ -259,10 +260,8 @@
       }).success(function(data) {
         if(+data.result === 1) {
           $log.info('active payment success');
-          payPasswordCheck();
         } else {
           $log.info('active payment failed');
-          utils.alert({content: data.message});
         }
       })
     };
