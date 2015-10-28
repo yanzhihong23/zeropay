@@ -80,30 +80,31 @@
     };
 
     // check whether school in valid
-    $scope.$watch('user.school', function(val) {
-      $scope.user.validSchool = false;
+    // $scope.$watch('user.school', function(val, old) {
+    //   if(val === old) return;
+    //   $scope.user.validSchool = false;
 
-      if(val) {
-        $filter('filter')($scope.schoolList, val).forEach(function(str) {
-          if(str === val) {
-            $scope.user.validSchool = true;
-            return;
-          }
-        })
-      }
-    }, true);
+    //   if(val) {
+    //     $filter('filter')($scope.schoolList, val).forEach(function(str) {
+    //       if(str === val) {
+    //         $scope.user.validSchool = true;
+    //         return;
+    //       }
+    //     })
+    //   }
+    // }, true);
 
     var saveAuthInfo = function() {
       userService.setAuthInfo($scope.user);
     };
 
     $scope.submit = function() {
-      if(!$scope.user.validSchool) {
-        utils.alert({
-          content: '学校名称不存在，请再次确认~'
-        });
-        return;
-      }
+      // if(!$scope.user.validSchool) {
+      //   utils.alert({
+      //     content: '学校名称不存在，请再次确认~'
+      //   });
+      //   return;
+      // }
 
     	$ionicLoading.show();
 
