@@ -108,32 +108,76 @@
       });
     };
 
+    // kq
+    // $scope.sendVcode = function() {
+    //   $ionicLoading.show();
+    //   MSApi.generateOrderNo({sessionId:sessionId}).success(function(data) {
+    //     if(data.flag === 1) {
+    //       params.extRefNo = data.data;
+    //       params.bankCardNo = $scope.card.cardNo;
+    //       params.mobile = $scope.card.phone;
+
+    //       params.realname = $scope.user.realname;
+    //       params.idNo = $scope.user.idNo;
+
+    //       $ionicLoading.show();
+    //       MSApi.getPayVcode(params).success(function(data) {
+    //         if(data.flag === 1) {
+    //           resendCountdown();
+
+    //           params.storablePan = data.storablePan;
+    //           params.token = data.token;
+    //           params.bankCode = $scope.bank.id;
+    //         } else {
+    //           phoneAuthPopup.close();
+    //           utils.alert({
+    //             content: data.msg
+    //           });
+    //         }
+    //       })
+    //     }
+    //   })
+    // };
+
     $scope.sendVcode = function() {
       $ionicLoading.show();
-      MSApi.generateOrderNo({sessionId:sessionId}).success(function(data) {
-        if(data.flag === 1) {
-          params.extRefNo = data.data;
-          params.bankCardNo = $scope.card.cardNo;
-          params.mobile = $scope.card.phone;
+      params = {
+        realname: $scope.user.realname,
+        idNo: $scope.user.idNo,
+        mId: mId,
+        bankCode: $scope.bank.id,
+        cardNo: $scope.card.cardNo,
+        phone: $scope.card.phone
+      };
 
-          params.realname = $scope.user.realname;
-          params.idNo = $scope.user.idNo;
+      NonoWebApi.auth(params).success(function(data) {
+        if(+data.result === 1) {
+          resendCountdown();
 
-          $ionicLoading.show();
-          MSApi.getPayVcode(params).success(function(data) {
-            if(data.flag === 1) {
-              resendCountdown();
+          params.extRefNo = data.map.externalRefNumber;
+        } else {
+          phoneAuthPopup.close();
+          utils.alert({
+            content: data.message
+          });
+        }
+      })
+    };
 
-              params.storablePan = data.storablePan;
-              params.token = data.token;
-              params.bankCode = $scope.bank.id;
-            } else {
-              phoneAuthPopup.close();
-              utils.alert({
-                content: data.msg
-              });
-            }
-          })
+    $scope.submit = function() {
+      $ionicLoading.show();
+      params.vcode = $scope.card.vcode;
+      NonoWebApi.bindCard(params).success(function(data) {
+        if(+data.result === 1) {
+          // save bind card success log
+          saveActionLog(true);
+          activeCredit();
+        } else {
+          utils.alert({
+            title: 'sorry，还款卡绑定失败！',
+            content: data.message,
+            okText: '我知道了'
+          });
         }
       })
     };
@@ -158,24 +202,26 @@
       phoneAuthPopup.close();
     };
 
-    // bind card
-    $scope.submit = function() {
-      $ionicLoading.show();
-      params.vcode = $scope.card.vcode;
-      MSApi.bindAndPay(params).success(function(data) {
-        if(data.flag === 1) {
-          // save bind card success log
-          saveActionLog(true);
-          activeCredit();
-        } else {
-          utils.alert({
-            title: 'sorry，还款卡绑定失败！',
-            content: data.msg,
-            okText: '我知道了'
-          });
-        }
-      });
-    };
+    // bind card -- KQ
+    // $scope.submit = function() {
+    //   $ionicLoading.show();
+    //   params.vcode = $scope.card.vcode;
+    //   MSApi.bindAndPay(params).success(function(data) {
+    //     if(data.flag === 1) {
+    //       // save bind card success log
+    //       saveActionLog(true);
+    //       activeCredit();
+    //     } else {
+    //       utils.alert({
+    //         title: 'sorry，还款卡绑定失败！',
+    //         content: data.msg,
+    //         okText: '我知道了'
+    //       });
+    //     }
+    //   });
+    // };
+
+    
 
     var showAlert = function(title) {
       utils.alert({
@@ -275,9 +321,9 @@
     var saveActionLog = function(isSucc) {
       NonoWebApi.saveActionLog({
         phone: user.phone,
-        actionType: 10,
+        actionType: 11,
         actionResult: isSucc ? 1 : 2,
-        remark: isSucc ? '易宝三要素认证通过' : '进入易宝三要素认证'
+        remark: isSucc ? '易宝四要素认证通过' : '进入易宝四要素认证'
       });
     };
 
