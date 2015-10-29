@@ -302,6 +302,46 @@
             provider: 'YB_FASTPAY'
           }
       });
-    }
+    };
+
+    this.auth = function(obj) {
+      return $http({
+        method: 'POST',
+        url: APISERVER.NONOWEB + '/creditAuth/auth',
+        headers: headers,
+        data: utils.param({
+          request: JSON.stringify({
+            name: obj.realname,
+            customerId: obj.mId,
+            certificateNo: obj.idNo,
+            bankName: obj.bankCode,
+            bankCard: obj.cardNo,
+            mobile: obj.phone,
+            msgKey: md5.createHash(obj.idNo + obj.cardNo)
+          })
+        })
+      });
+    };
+
+    this.bindCard = function(obj) {
+      return $http({
+        method: 'POST',
+        url: APISERVER.NONOWEB + '/creditAuth/bindCard',
+        headers: headers,
+        data: utils.param({
+          request: JSON.stringify({
+            // name: obj.realname,
+            externalRefNumber: obj.extRefNo,
+            customerId: obj.mId,
+            // certificateNo: obj.idNo,
+            bankName: obj.bankCode,
+            cardNo: obj.cardNo,
+            // mobile: obj.phone,
+            validNo: obj.vcode,
+            msgKey: md5.createHash(obj.cardNo + obj.bankCode)
+          })
+        })
+      });
+    };
   }
 })();
