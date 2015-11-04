@@ -155,13 +155,14 @@
           resendCountdown();
 
           params.extRefNo = data.map.externalRefNumber;
+          params.token = data.map.token;
         } else {
           phoneAuthPopup.close();
           utils.alert({
             content: data.message
           });
         }
-      })
+      });
     };
 
     $scope.submit = function() {
@@ -179,7 +180,7 @@
             okText: '我知道了'
           });
         }
-      })
+      });
     };
 
     $scope.selectBank = function() {
@@ -323,7 +324,7 @@
         phone: user.phone,
         actionType: 11,
         actionResult: isSucc ? 1 : 2,
-        remark: isSucc ? '易宝四要素认证通过' : '进入易宝四要素认证'
+        remark: isSucc ? '快钱四要素认证通过' : '进入快钱四要素认证'
       });
     };
 

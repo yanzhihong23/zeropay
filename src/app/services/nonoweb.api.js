@@ -307,15 +307,19 @@
     this.auth = function(obj) {
       return $http({
         method: 'POST',
-        url: APISERVER.NONOWEB + '/creditAuth/auth',
+        url: APISERVER.NONOWEB + '/creditAuth/yangRuiAuth',
         headers: headers,
         data: utils.param({
           request: JSON.stringify({
             name: obj.realname,
             customerId: obj.mId,
+            certificateType: obj.idType || 0,
             certificateNo: obj.idNo,
             bankName: obj.bankCode,
             bankCard: obj.cardNo,
+            cardType : obj.cardType || 0,
+            agreeProtocol : true,
+            provider : "_99BILL_FASTPAY",
             mobile: obj.phone,
             msgKey: md5.createHash(obj.idNo + obj.cardNo)
           })
@@ -326,19 +330,21 @@
     this.bindCard = function(obj) {
       return $http({
         method: 'POST',
-        url: APISERVER.NONOWEB + '/creditAuth/bindCard',
+        url: APISERVER.NONOWEB + '/creditAuth/yangRuiBind',
         headers: headers,
         data: utils.param({
           request: JSON.stringify({
-            // name: obj.realname,
-            externalRefNumber: obj.extRefNo,
-            customerId: obj.mId,
-            // certificateNo: obj.idNo,
-            bankName: obj.bankCode,
-            cardNo: obj.cardNo,
-            // mobile: obj.phone,
-            validNo: obj.vcode,
-            msgKey: md5.createHash(obj.cardNo + obj.bankCode)
+            customerId : obj.mId,
+            certificateType : obj.idType || 0,
+            certificateNo : obj.idNo,
+            bankCard : obj.cardNo,
+            mobile : obj.phone,
+            agreeProtocol : true,
+            provider : "_99BILL_FASTPAY",
+            token : obj.token,
+            validNo : obj.vcode,
+            orderNo : obj.extRefNo,
+            msgKey: md5.createHash(obj.idNo + obj.cardNo)
           })
         })
       });
