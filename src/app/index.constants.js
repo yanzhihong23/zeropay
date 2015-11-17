@@ -3,7 +3,7 @@
 
   angular
     .module('zeropay')
-    .constant('HOST', 'http://openapi.test.nonobank.com')
+   // .constant('HOST', 'http://openapi.test.nonobank.com')
     .constant('MERCHANT', '1291795') // kky
     .constant('PRODUCTID', '90')
     .factory('OPENID', function($location, utils, $log) {
