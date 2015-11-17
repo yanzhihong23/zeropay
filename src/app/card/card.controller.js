@@ -147,7 +147,8 @@
         mId: mId,
         bankCode: $scope.bank.id,
         cardNo: $scope.card.cardNo,
-        phone: $scope.card.phone
+        phone: $scope.card.phone,
+        
       };
 
       NonoWebApi.auth(params).success(function(data) {
@@ -155,7 +156,12 @@
           resendCountdown();
 
           params.extRefNo = data.map.externalRefNumber;
+          params.externalRefNumber = data.map.externalRefNumber;
           params.token = data.map.token;
+          params.storablePan = data.map.storablePan;
+        	params.bankId = data.map.bankId;
+        	params.bankType = data.map.type;
+        	
         } else {
           phoneAuthPopup.close();
           utils.alert({
