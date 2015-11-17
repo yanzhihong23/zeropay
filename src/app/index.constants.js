@@ -4,7 +4,7 @@
   angular
     .module('zeropay')
     .constant('HOST', 'https://openapi.idc.nonobank.com')
-    .constant('MERCHANT', '1291795') // kky
+    .constant('MERCHANT', '1000') // master
     .constant('PRODUCTID', '90')
     .factory('OPENID', function($location, utils, $log) {
       $log.debug('factory');
