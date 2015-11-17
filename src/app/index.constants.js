@@ -3,6 +3,7 @@
 
   angular
     .module('zeropay')
+    .constant('HOST', 'https://openapi.idc.nonobank.com')
     .constant('HOST', 'http://openapi.test.nonobank.com')
     .constant('MERCHANT', '1291902') // yyhl
     .constant('PRODUCTID', '90')

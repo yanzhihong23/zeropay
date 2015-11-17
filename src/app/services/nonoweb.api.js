@@ -334,17 +334,30 @@
         headers: headers,
         data: utils.param({
           request: JSON.stringify({
-            customerId : obj.mId,
-            certificateType : obj.idType || 0,
+            
+            //customerId : obj.mId,
+            userId : obj.mId,
+            /*certificateType : obj.idType || 0,
             certificateNo : obj.idNo,
-            bankCard : obj.cardNo,
-            mobile : obj.phone,
-            agreeProtocol : true,
-            provider : "_99BILL_FASTPAY",
+            bankCard : obj.cardNo,*/
+            mobilenum : obj.phone,
+            //mobile : obj.phone,
+          
+          /* agreeProtocol : true,
+            provider : "_99BILL_FASTPAY",*/
+           
             token : obj.token,
+            
+            externalRefNumber : obj.externalRefNumber,
+            bankId : obj.bankId,
+            storablePan : obj.storablePan,
+            bankType : obj.bankType,
+            amount : 0,
+            
             validNo : obj.vcode,
-            orderNo : obj.extRefNo,
-            msgKey: md5.createHash(obj.idNo + obj.cardNo)
+            //orderNo : obj.extRefNo,
+            //msgKey: md5.createHash(obj.idNo + obj.cardNo)
+            msgKey: md5.createHash(obj.mId + obj.vcode)
           })
         })
       });
